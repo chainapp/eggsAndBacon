@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Satisfy-Regular.ttf">
+            <string>Satisfy</string>
+            <string>Satisfy</string>
+            <string>Satisfy</string>
+        </mutableArray>
+    </customFonts>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="Eggs_And_Bacon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="model.png" translatesAutoresizingMaskIntoConstraints="NO" id="IW5-Dj-5Ab">
+                                <rect key="frame" x="16" y="146" width="343" height="343"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dbj-BB-avz">
+                                <rect key="frame" x="56" y="607" width="262" height="40"/>
+                                <color key="backgroundColor" red="0.22745098039215686" green="0.23529411764705882" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="Satisfy" family="Satisfy" pointSize="13"/>
+                                <state key="normal" title="Help your friends stay in shape! Share this meal ...">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareButtonAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="vci-Pk-3UR"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cwn-bP-unn">
+                                <rect key="frame" x="56" y="497" width="262" height="102"/>
+                                <fontDescription key="fontDescription" name="Satisfy" family="Satisfy" pointSize="23"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="EGGS &amp; BACON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZ7-ik-EnJ">
+                                <rect key="frame" x="16" y="72" width="343" height="56"/>
+                                <fontDescription key="fontDescription" name="Satisfy" family="Satisfy" pointSize="35"/>
+                                <color key="textColor" red="0.2274509804" green="0.23529411759999999" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkT-fI-BiV">
+                                <rect key="frame" x="16" y="28" width="28" height="21"/>
+                                <state key="normal" image="menuIcon.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuButtonAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="W09-i3-3YV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94901960784313721" green="0.82352941176470584" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dEO-UG-uaL">
+                        <barButtonItem key="leftBarButtonItem" image="menuIcon.png" id="ANX-dR-CUA">
+                            <color key="tintColor" red="0.81297348479999998" green="0.81297348479999998" blue="0.81297348479999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="messageLabel" destination="Cwn-bP-unn" id="KjI-WV-VYD"/>
+                        <outlet property="photoImageView" destination="IW5-Dj-5Ab" id="fcF-hk-wzm"/>
+                        <outlet property="shareButton" destination="Dbj-BB-avz" id="w9V-4U-xXd"/>
+                        <outlet property="titleLabel" destination="HZ7-ik-EnJ" id="wZR-Ot-3b2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="menuIcon.png" width="36" height="27"/>
+        <image name="model.png" width="414" height="414"/>
+    </resources>
+</document>
