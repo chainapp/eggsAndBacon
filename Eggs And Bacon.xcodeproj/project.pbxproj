@@ -16,6 +16,7 @@
 		E8FE3D211B39B5BF005939DF /* Satisfy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3D201B39B5BF005939DF /* Satisfy-Regular.ttf */; };
 		E8FE3D231B39B7A5005939DF /* model.png in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3D221B39B7A5005939DF /* model.png */; };
 		E8FE3D251B39B7EB005939DF /* menuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3D241B39B7EB005939DF /* menuIcon.png */; };
+		FBDF7590250702E9D8E4BF70 /* Pods_Eggs_And_Bacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D26655A3D8DA0FE81F16AD0 /* Pods_Eggs_And_Bacon.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D26655A3D8DA0FE81F16AD0 /* Pods_Eggs_And_Bacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eggs_And_Bacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2996A33FE2612CF547BF1C99 /* Pods-Eggs And Bacon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eggs And Bacon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon.debug.xcconfig"; sourceTree = "<group>"; };
+		58DD687B1B39E6520012BCFF /* Eggs And Bacon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Eggs And Bacon-Bridging-Header.h"; sourceTree = "<group>"; };
+		66266576EC30B50F1B681F03 /* Pods-Eggs And Bacon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eggs And Bacon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon.release.xcconfig"; sourceTree = "<group>"; };
 		E8FE3CF61B39A015005939DF /* Eggs And Bacon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eggs And Bacon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8FE3CFA1B39A015005939DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8FE3CFB1B39A015005939DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBDF7590250702E9D8E4BF70 /* Pods_Eggs_And_Bacon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,12 +68,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2926D71EB46B4A89FCFB49F8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2996A33FE2612CF547BF1C99 /* Pods-Eggs And Bacon.debug.xcconfig */,
+				66266576EC30B50F1B681F03 /* Pods-Eggs And Bacon.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DB0BC18A93A650664CD2F34B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1D26655A3D8DA0FE81F16AD0 /* Pods_Eggs_And_Bacon.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E8FE3CED1B39A015005939DF = {
 			isa = PBXGroup;
 			children = (
 				E8FE3CF81B39A015005939DF /* Eggs And Bacon */,
 				E8FE3D0E1B39A015005939DF /* Eggs And BaconTests */,
 				E8FE3CF71B39A015005939DF /* Products */,
+				2926D71EB46B4A89FCFB49F8 /* Pods */,
+				DB0BC18A93A650664CD2F34B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,6 +149,7 @@
 			children = (
 				E8FE3CFB1B39A015005939DF /* AppDelegate.swift */,
 				E8FE3CFD1B39A015005939DF /* ViewController.swift */,
+				58DD687B1B39E6520012BCFF /* Eggs And Bacon-Bridging-Header.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -152,9 +178,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8FE3D151B39A015005939DF /* Build configuration list for PBXNativeTarget "Eggs And Bacon" */;
 			buildPhases = (
+				A6F61EA2562EAC7F87779DD0 /* Check Pods Manifest.lock */,
 				E8FE3CF21B39A015005939DF /* Sources */,
 				E8FE3CF31B39A015005939DF /* Frameworks */,
 				E8FE3CF41B39A015005939DF /* Resources */,
+				57BA7827FE4639EC984C0617 /* Copy Pods Resources */,
+				A306C4FEAA5ACFA711B646A6 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -242,6 +271,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		57BA7827FE4639EC984C0617 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A306C4FEAA5ACFA711B646A6 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A6F61EA2562EAC7F87779DD0 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E8FE3CF21B39A015005939DF /* Sources */ = {
@@ -374,21 +451,28 @@
 		};
 		E8FE3D161B39A015005939DF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2996A33FE2612CF547BF1C99 /* Pods-Eggs And Bacon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Eggs And Bacon/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Eggs And Bacon/Eggs And Bacon-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		E8FE3D171B39A015005939DF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66266576EC30B50F1B681F03 /* Pods-Eggs And Bacon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Eggs And Bacon/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Eggs And Bacon/Eggs And Bacon-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -445,6 +529,7 @@
 				E8FE3D171B39A015005939DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E8FE3D181B39A015005939DF /* Build configuration list for PBXNativeTarget "Eggs And BaconTests" */ = {
 			isa = XCConfigurationList;
@@ -453,6 +538,7 @@
 				E8FE3D1A1B39A015005939DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
