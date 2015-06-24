@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		587C4FD71B3AF7F00033C0A7 /* EABMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 587C4FD61B3AF7F00033C0A7 /* EABMenuView.xib */; };
+		587C4FD91B3B006B0033C0A7 /* EABMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587C4FD81B3B006B0033C0A7 /* EABMenuView.swift */; };
 		E8FE3CFC1B39A015005939DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FE3CFB1B39A015005939DF /* AppDelegate.swift */; };
 		E8FE3CFE1B39A015005939DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FE3CFD1B39A015005939DF /* ViewController.swift */; };
 		E8FE3D011B39A015005939DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3CFF1B39A015005939DF /* Main.storyboard */; };
@@ -32,6 +34,8 @@
 /* Begin PBXFileReference section */
 		1D26655A3D8DA0FE81F16AD0 /* Pods_Eggs_And_Bacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eggs_And_Bacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2996A33FE2612CF547BF1C99 /* Pods-Eggs And Bacon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eggs And Bacon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon.debug.xcconfig"; sourceTree = "<group>"; };
+		587C4FD61B3AF7F00033C0A7 /* EABMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EABMenuView.xib; sourceTree = "<group>"; };
+		587C4FD81B3B006B0033C0A7 /* EABMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EABMenuView.swift; sourceTree = "<group>"; };
 		58DD687B1B39E6520012BCFF /* Eggs And Bacon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Eggs And Bacon-Bridging-Header.h"; sourceTree = "<group>"; };
 		66266576EC30B50F1B681F03 /* Pods-Eggs And Bacon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eggs And Bacon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon.release.xcconfig"; sourceTree = "<group>"; };
 		E8FE3CF61B39A015005939DF /* Eggs And Bacon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eggs And Bacon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +164,8 @@
 				E8FE3CFF1B39A015005939DF /* Main.storyboard */,
 				E8FE3D041B39A015005939DF /* LaunchScreen.xib */,
 				E8FE3D021B39A015005939DF /* Images.xcassets */,
+				587C4FD61B3AF7F00033C0A7 /* EABMenuView.xib */,
+				587C4FD81B3B006B0033C0A7 /* EABMenuView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -254,6 +260,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				587C4FD71B3AF7F00033C0A7 /* EABMenuView.xib in Resources */,
 				E8FE3D011B39A015005939DF /* Main.storyboard in Resources */,
 				E8FE3D251B39B7EB005939DF /* menuIcon.png in Resources */,
 				E8FE3D211B39B5BF005939DF /* Satisfy-Regular.ttf in Resources */,
@@ -325,6 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				587C4FD91B3B006B0033C0A7 /* EABMenuView.swift in Sources */,
 				E8FE3CFE1B39A015005939DF /* ViewController.swift in Sources */,
 				E8FE3CFC1B39A015005939DF /* AppDelegate.swift in Sources */,
 			);
