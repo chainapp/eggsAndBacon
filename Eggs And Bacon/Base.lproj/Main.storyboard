@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D130a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Satisfy-Regular.ttf">
@@ -23,12 +24,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="model.png" translatesAutoresizingMaskIntoConstraints="NO" id="IW5-Dj-5Ab">
-                                <rect key="frame" x="0.0" y="146" width="375" height="343"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="model.png" translatesAutoresizingMaskIntoConstraints="NO" id="IW5-Dj-5Ab">
+                                <rect key="frame" x="0.0" y="140" width="375" height="343"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="343" id="2te-Qa-llb"/>
+                                </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dbj-BB-avz">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dbj-BB-avz">
                                 <rect key="frame" x="56" y="607" width="262" height="40"/>
                                 <color key="backgroundColor" red="0.22745098039215686" green="0.23529411764705882" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="65H-ia-Mii"/>
+                                    <constraint firstAttribute="width" constant="262" id="iwA-Si-M4w"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Satisfy" family="Satisfy" pointSize="13"/>
                                 <state key="normal" title="Help your friends stay in shape! Share this meal ...">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -38,20 +46,27 @@
                                     <action selector="shareButtonAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="vci-Pk-3UR"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cwn-bP-unn">
-                                <rect key="frame" x="56" y="497" width="262" height="102"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cwn-bP-unn">
+                                <rect key="frame" x="56" y="498" width="263" height="101"/>
                                 <fontDescription key="fontDescription" name="Satisfy" family="Satisfy" pointSize="23"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="EGGS &amp; BACON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZ7-ik-EnJ">
-                                <rect key="frame" x="16" y="72" width="343" height="56"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EGGS &amp; BACON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZ7-ik-EnJ">
+                                <rect key="frame" x="16" y="72" width="343" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="nIW-vt-AEm"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Satisfy" family="Satisfy" pointSize="35"/>
                                 <color key="textColor" red="0.2274509804" green="0.23529411759999999" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkT-fI-BiV">
-                                <rect key="frame" x="16" y="28" width="28" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkT-fI-BiV">
+                                <rect key="frame" x="16" y="28" width="28" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="28" id="8Ff-Ka-7PJ"/>
+                                    <constraint firstAttribute="height" constant="28" id="olV-aA-e3F"/>
+                                </constraints>
                                 <state key="normal" image="menuIcon.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -61,6 +76,25 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.94901960784313721" green="0.82352941176470584" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="IW5-Dj-5Ab" firstAttribute="top" secondItem="HZ7-ik-EnJ" secondAttribute="bottom" constant="18" id="1FY-8M-M6C"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Dbj-BB-avz" secondAttribute="bottom" constant="20" id="2Lw-iS-vuv"/>
+                            <constraint firstItem="Cwn-bP-unn" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="40" id="4FW-X8-FTj"/>
+                            <constraint firstAttribute="centerX" secondItem="Dbj-BB-avz" secondAttribute="centerX" id="CqF-SF-GPM"/>
+                            <constraint firstItem="dkT-fI-BiV" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="CwN-cJ-SNk"/>
+                            <constraint firstAttribute="centerX" secondItem="HZ7-ik-EnJ" secondAttribute="centerX" id="FL6-f4-LLo"/>
+                            <constraint firstItem="HZ7-ik-EnJ" firstAttribute="top" secondItem="dkT-fI-BiV" secondAttribute="bottom" constant="16" id="N1h-dn-AE6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Cwn-bP-unn" secondAttribute="trailing" constant="40" id="QcM-8Z-NGY"/>
+                            <constraint firstAttribute="centerX" secondItem="Cwn-bP-unn" secondAttribute="centerX" id="QkO-bC-Bc6"/>
+                            <constraint firstAttribute="centerX" secondItem="IW5-Dj-5Ab" secondAttribute="centerX" id="TMt-Gq-tNA"/>
+                            <constraint firstItem="HZ7-ik-EnJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="V95-eq-v2a"/>
+                            <constraint firstItem="HZ7-ik-EnJ" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="Z1D-s6-TsI"/>
+                            <constraint firstItem="dkT-fI-BiV" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="dLO-li-RA3"/>
+                            <constraint firstItem="IW5-Dj-5Ab" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="dUn-bx-KbM"/>
+                            <constraint firstItem="Dbj-BB-avz" firstAttribute="top" secondItem="Cwn-bP-unn" secondAttribute="bottom" constant="8" id="fzp-XY-og7"/>
+                            <constraint firstItem="Cwn-bP-unn" firstAttribute="top" secondItem="IW5-Dj-5Ab" secondAttribute="bottom" constant="15" id="g6P-Zm-Now"/>
+                            <constraint firstAttribute="trailing" secondItem="IW5-Dj-5Ab" secondAttribute="trailing" id="i5L-3T-ijP"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dEO-UG-uaL">
                         <barButtonItem key="leftBarButtonItem" image="menuIcon.png" id="ANX-dR-CUA">

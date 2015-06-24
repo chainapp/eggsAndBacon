@@ -10,6 +10,9 @@ import UIKit
 import DynamicBlurView
 import GPUImage
 
+let    MAXSHAKES:Int = 5
+let    BLURRADIUSPIX:CGFloat = 20
+
 enum messageStatus: String {
     case notShaked = "Your daily breakfast has arrived!\nShake to eat it ..."
     case Shaked = "Et voilà !\nSee you tomorrow at breakfast time ..."
@@ -22,8 +25,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var photoImageView: UIImageView!
-    var       i:CGFloat = 19
+    var       i:Int = 0
     let       imageOriginal:UIImage = UIImage(named: "model")!
+    var       imagesBlurred:Array<UIImage> = Array<UIImage>()
     
     override func canBecomeFirstResponder() -> Bool {
         return true
@@ -31,17 +35,16 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // titleLabel
         self.titleLabel.font = UIFont(name: "Satisfy", size: 35)
-        
         // messageLabel
         self.messageLabel.text = messageStatus.notShaked.rawValue
         self.messageLabel.font = UIFont(name: "Satisfy", size: 23)
-        
         // shareButton
         self.shareButton.titleLabel?.font = UIFont(name: "Satisfy", size: 13)
         self.shareButton.layer.cornerRadius = 6
+        self.prepareImages()
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -53,6 +56,23 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    //MARK: Prepare Images
+    
+    func prepareImages()
+    {
+        var i:Int = 0
+        var decrease:CGFloat = 0
+        
+        while (i < MAXSHAKES)
+        {
+            self.imagesBlurred.append(self.blurWithGPUImageGaussian(self.photoImageView.image!, pixelRadius: BLURRADIUSPIX - decrease))
+            decrease = CGFloat(Float(decrease) + (Float(BLURRADIUSPIX) / Float(MAXSHAKES)))
+            i = i + 1
+        }
+        self.imagesBlurred.append(self.photoImageView.image!)
     }
     
     func takeSnapshotOfView(view: UIView) -> UIImage
@@ -75,13 +95,35 @@ class ViewController: UIViewController {
         
         if motion == UIEventSubtype.MotionShake
         {
-            
-            let img = blurWithGPUImageGaussian(self.imageOriginal, pixelRadius: self.i)
-            self.photoImageView.image = nil
-            self.photoImageView.image = img
-            if self.i > 0
+            if self.i < (self.imagesBlurred.count - 1)
             {
-                self.i = self.i - 3
+                println(self.i)
+                self.photoImageView.image = nil
+                self.photoImageView.image = self.imagesBlurred[self.i]
+                self.i = self.i + 1
+            }
+            else
+            {
+                self.photoImageView.image = self.imagesBlurred.last
+            }
+        }
+    }
+    
+    
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
+        
+        if motion == UIEventSubtype.MotionShake
+        {
+            if self.i < (self.imagesBlurred.count - 1)
+            {
+                println(self.i)
+                self.photoImageView.image = nil
+                self.photoImageView.image = self.imagesBlurred[self.i]
+                self.i = self.i + 1
+            }
+            else
+            {
+                self.photoImageView.image = self.imagesBlurred.last
             }
         }
     }
