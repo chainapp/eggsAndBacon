@@ -225,7 +225,22 @@ class ViewController: UIViewController {
         self.reloadUImageView()
     }
     
+    func share() {
+        let text = "Share your Eggs or your Bacon today!"
+        
+        if let url = NSURL(string: "http://www.urlsurlesitedapple.com") // On pourra mettre l'image ?
+        {
+            let objectsToShare = [text, url]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            activityVC.excludedActivityTypes = [UIActivityTypeAirDrop, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePrint]
+            
+            self.presentViewController(activityVC, animated: true, completion: nil)
+        }
+    }
+    
+    
     @IBAction func shareButtonAction(sender: UIButton) {
+        self.share()
     }
     
     @IBAction func showMenu(sender: AnyObject)
