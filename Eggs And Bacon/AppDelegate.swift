@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        Parse.enableLocalDatastore()
         Parse.setApplicationId("7vXQaUViTCx03Xth3v6OTx5kk64YrDjuJwYJLI9m", clientKey: "wk1NBzEKqRyV2fJz0bWIzKY9i3TxnFEfyz6k50bU")
         
         let userNotificationTypes = (UIUserNotificationType.Alert |  UIUserNotificationType.Badge |  UIUserNotificationType.Sound);
@@ -22,13 +24,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
+        
+        //Background
+        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        
         return true
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let installation = PFInstallation.currentInstallation()
         installation.setDeviceTokenFromData(deviceToken)
-        installation.saveInBackground()
+        installation.saveEventually { (success:Bool, error:NSError?) -> Void in
+            println(error)
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -53,6 +61,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    //MARK:  BACKGROUND Fetch
+    func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        ManagedPFObject.getDailyPictures { (results, images, error) -> () in
+            if error != nil
+            {
+                println("Error fetchInBackground")
+                println(error)
+                completionHandler(UIBackgroundFetchResult.Failed)
+            }
+            else
+            {
+                NSNotificationCenter.defaultCenter().postNotificationName("newDatas", object: nil)
+                completionHandler(UIBackgroundFetchResult.NewData)
+            }            
+        }
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        ManagedPFObject.getDailyPictures { (results, images, error) -> () in
+            if error != nil
+            {
+                println("Error fetchInBackground")
+                println(error)
+                completionHandler(UIBackgroundFetchResult.Failed)
+            }
+            else
+            {
+                NSNotificationCenter.defaultCenter().postNotificationName("newDatas", object: nil)
+                completionHandler(UIBackgroundFetchResult.NewData)
+            }
+            
+        }
+    }
 
 }
 

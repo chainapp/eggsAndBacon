@@ -6,7 +6,7 @@ target 'Eggs And Bacon' do
 pod 'GPUImage', '~> 0.1'
 pod "DynamicBlurView"
 use_frameworks!
-pod 'Parse-iOS-SDK'
+pod 'Parse'
 
 end
 

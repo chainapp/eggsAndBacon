@@ -9,6 +9,7 @@
 import UIKit
 import DynamicBlurView
 import GPUImage
+import Parse
 
 let    MAXSHAKES:Int = 5
 let    BLURRADIUSPIX:CGFloat = 20
@@ -45,41 +46,12 @@ class ViewController: UIViewController {
         // shareButton
         self.shareButton.titleLabel?.font = UIFont(name: "Satisfy", size: 13)
         self.shareButton.layer.cornerRadius = 6
-        
-        ManagedPFObject.getDailyPictures { (results, images, error) -> () in
-            //println(results)
-            println(images)
-            if results != nil && images != nil
-            {
-                let arrPFO = results as Array<PFObject>!
-                let imgs = images as Array<UIImage>!
-                
-                var i:Int = 0
-                while (i < arrPFO.count)
-                {
-                    let o:PFObject = arrPFO[i]
-                    if o.objectForKey("category") as? String == "Eggs"
-                    {
-                        self.imagesCateg[0] = self.prepareImages(imgs[i])
-                    }
-                    else if o.objectForKey("category") as? String == "Both"
-                    {
-                        self.imagesCateg[1] = self.prepareImages(imgs[i])
-                    }
-                    else
-                    {
-                        self.imagesCateg[2] = self.prepareImages(imgs[i])
-                    }
-                    i = i + 1
-                }
-                self.imagesBlurred = self.imagesCateg[0]
-            }
-        }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "newData", name: "newDatas", object: nil)
+        self.loadData()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         //Create Menu
         var menu:EABMenuView = EABMenuView.instanceFromNib()
         var constraintHMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: MENUHEIGHT)
@@ -107,11 +79,71 @@ class ViewController: UIViewController {
         self.becomeFirstResponder()
     }
     
+    func updateUI()
+    {
+        self.valueSegmentedIndexChanged()
+    }
+    
+    func newData()
+    {
+        self.loadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: Load data
+    
+    func initDatasFromResults(results: Array<PFObject>?, images: Array<UIImage>?)
+    {
+        let arrPFO = results as Array<PFObject>!
+        let imgs = images as Array<UIImage>!
+        
+        var i:Int = 0
+        while (i < arrPFO.count)
+        {
+            let o:PFObject = arrPFO[i]
+            if o.objectForKey("category") as? String == "Eggs"
+            {
+                self.imagesCateg[0] = self.prepareImages(imgs[i])
+            }
+            else if o.objectForKey("category") as? String == "Both"
+            {
+                self.imagesCateg[1] = self.prepareImages(imgs[i])
+            }
+            else
+            {
+                self.imagesCateg[2] = self.prepareImages(imgs[i])
+            }
+            i = i + 1
+        }
+        self.imagesBlurred = self.imagesCateg[0]
+        self.updateUI()
+    }
+    
+    func loadData()
+    {
+        ManagedPFObject.getLocalDailyPictures { (results, images, error) -> () in
+            println(images)
+            if results != nil && images != nil
+            {
+                self.initDatasFromResults(results, images: images)
+            }
+            else
+            {
+                ManagedPFObject.getDailyPictures { (results, images, error) -> () in
+                    //println(results)
+                    println(images)
+                    if results != nil && images != nil
+                    {
+                        self.initDatasFromResults(results, images: images)
+                    }
+                }
+            }
+        }
+    }
     
     //MARK: Process Images
     
