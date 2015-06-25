@@ -3,3 +3,4 @@
 //
 
 #import <GPUImage/GPUImage.h>
+#import <Parse/Parse.h>

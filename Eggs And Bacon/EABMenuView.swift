@@ -12,9 +12,29 @@ class EABMenuView: UIView {
 
     
     @IBOutlet weak var segmentedIndexType: UISegmentedControl!
+    var       isShow:Bool = false
+    var       constraintTop:NSLayoutConstraint?
     
     class func instanceFromNib() -> EABMenuView {
         return UINib(nibName: "EABMenuView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! EABMenuView
+    }
+    
+    func setConstraintTopMenu(constraint:NSLayoutConstraint!)
+    {
+        self.constraintTop = constraint
+        self.superview?.layoutIfNeeded()
+    }
+    
+    func hideMenu()
+    {
+        self.isShow = false
+        self.constraintTop?.constant = -self.bounds.size.height
+    }
+    
+    func showMenu()
+    {
+        self.isShow = true
+        self.constraintTop?.constant = 0
     }
     
     /*

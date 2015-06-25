@@ -23,16 +23,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var photoImageView: UIImageView!
-    var       i:Int = 0
+    @IBOutlet weak var viewContainButton: UIView!
+    @IBOutlet weak var buttonShowMenu: UIButton!
+    var       blurProgress:Int = 0
     let       imageOriginal:UIImage = UIImage(named: "model")!
     var       imagesBlurred:Array<UIImage> = Array<UIImage>()
-    var       constraintHMenu:NSLayoutConstraint?
+    var       imagesCateg:Array<Array<UIImage>> = Array<Array<UIImage>>(count: 3, repeatedValue: Array<UIImage>())
     var       menuView:EABMenuView?
     var       menuIsShow:Bool? = false
     
-    override func canBecomeFirstResponder() -> Bool {
-        return true
-    }
+    //MARK: View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,52 +45,91 @@ class ViewController: UIViewController {
         // shareButton
         self.shareButton.titleLabel?.font = UIFont(name: "Satisfy", size: 13)
         self.shareButton.layer.cornerRadius = 6
-        self.prepareImages()
+        
+        ManagedPFObject.getDailyPictures { (results, images, error) -> () in
+            //println(results)
+            println(images)
+            if results != nil && images != nil
+            {
+                let arrPFO = results as Array<PFObject>!
+                let imgs = images as Array<UIImage>!
+                
+                var i:Int = 0
+                while (i < arrPFO.count)
+                {
+                    let o:PFObject = arrPFO[i]
+                    if o.objectForKey("category") as? String == "Eggs"
+                    {
+                        self.imagesCateg[0] = self.prepareImages(imgs[i])
+                    }
+                    else if o.objectForKey("category") as? String == "Both"
+                    {
+                        self.imagesCateg[1] = self.prepareImages(imgs[i])
+                    }
+                    else
+                    {
+                        self.imagesCateg[2] = self.prepareImages(imgs[i])
+                    }
+                    i = i + 1
+                }
+                self.imagesBlurred = self.imagesCateg[0]
+            }
         }
-    
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //Create Menu
         var menu:EABMenuView = EABMenuView.instanceFromNib()
         var constraintHMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: MENUHEIGHT)
         let constraintWMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: self.view.bounds.size.width)
-        self.constraintHMenu = constraintHMenu
         menu.setTranslatesAutoresizingMaskIntoConstraints(false)
         menu.addConstraint(constraintHMenu)
         menu.addConstraint(constraintWMenu)
         
-        var height:CGFloat = self.navigationController!.navigationBar.bounds.height + UIApplication.sharedApplication().statusBarFrame.height
-        
-        let constraintTopMargin:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: NSLayoutAttribute.Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1, constant:(height - MENUHEIGHT))
-        
+        let constraintTopMargin:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: NSLayoutAttribute.Top, relatedBy: .Equal, toItem: self.viewContainButton, attribute: .Bottom, multiplier: 1, constant:0)
         let constraintXMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .CenterX, relatedBy: .Equal, toItem: self.view, attribute: .CenterX, multiplier: 1, constant: 0)
         self.view.addSubview(menu)
         self.view.addConstraint(constraintTopMargin)
         self.view.addConstraint(constraintXMenu)
-        
-        
         self.menuView = menu
-        
+        self.menuView?.constraintTop = constraintTopMargin
+        self.menuView?.hideMenu()
+        self.menuView?.segmentedIndexType.selectedSegmentIndex = 0
+        self.menuView?.segmentedIndexType.addTarget(self, action: "valueSegmentedIndexChanged", forControlEvents: UIControlEvents.ValueChanged)
+        self.view.bringSubviewToFront(self.viewContainButton)
+        self.view.layoutIfNeeded()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.becomeFirstResponder()
-        var img:UIImage = self.takeSnapshotOfView(self.photoImageView)
-        self.photoImageView.image = self.blurWithGPUImageGaussian(img, pixelRadius: 20)
-        var menuFrame:CGRect = self.menuView!.frame
-        menuFrame.origin.y -= menuFrame.size.height
-        self.menuView!.frame = menuFrame
-        self.menuView!.hidden = false
-
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     
-    //MARK: Prepare Images
+    //MARK: Process Images
+    
+    func prepareImages(baseImg:UIImage!) -> Array<UIImage>
+    {
+        var lRet:Array<UIImage> = Array<UIImage>()
+        var i:Int = 0
+        var decrease:CGFloat = 0
+        
+        while (i < MAXSHAKES)
+        {
+            lRet.append(self.blurWithGPUImageGaussian(baseImg!, pixelRadius: BLURRADIUSPIX - decrease))
+            decrease = CGFloat(Float(decrease) + (Float(BLURRADIUSPIX) / Float(MAXSHAKES)))
+            i = i + 1
+        }
+        lRet.append(baseImg)
+        return lRet
+    }
     
     func prepareImages()
     {
@@ -122,16 +161,18 @@ class ViewController: UIViewController {
         return gpuBlurGaussianFilter.imageByFilteringImage(image)
     }
     
+    //MARK: Motion
+    
     override func motionBegan(motion: UIEventSubtype, withEvent event: UIEvent) {
         
         if motion == UIEventSubtype.MotionShake
         {
-            if self.i < (self.imagesBlurred.count - 1)
+            if self.blurProgress < (self.imagesBlurred.count - 1)
             {
-                println(self.i)
+                println(self.blurProgress)
                 self.photoImageView.image = nil
-                self.photoImageView.image = self.imagesBlurred[self.i]
-                self.i = self.i + 1
+                self.photoImageView.image = self.imagesBlurred[self.blurProgress]
+                self.blurProgress = self.blurProgress + 1
             }
             else
             {
@@ -145,12 +186,12 @@ class ViewController: UIViewController {
         
         if motion == UIEventSubtype.MotionShake
         {
-            if self.i < (self.imagesBlurred.count - 1)
+            if self.blurProgress < (self.imagesBlurred.count - 1)
             {
-                println(self.i)
+                println(self.blurProgress)
                 self.photoImageView.image = nil
-                self.photoImageView.image = self.imagesBlurred[self.i]
-                self.i = self.i + 1
+                self.photoImageView.image = self.imagesBlurred[self.blurProgress]
+                self.blurProgress = self.blurProgress + 1
             }
             else
             {
@@ -159,34 +200,61 @@ class ViewController: UIViewController {
         }
     }
     
+    //MARK: Action
+    
+    func reloadUImageView()
+    {
+        self.photoImageView.image = self.imagesBlurred[0]
+    }
+    
+    func valueSegmentedIndexChanged()
+    {
+        self.blurProgress = 0
+        if self.menuView?.segmentedIndexType.selectedSegmentIndex == 0
+        {
+            self.imagesBlurred = self.imagesCateg[0]
+        }
+        else if self.menuView?.segmentedIndexType.selectedSegmentIndex == 1
+        {
+            self.imagesBlurred = self.imagesCateg[1]
+        }
+        else
+        {
+            self.imagesBlurred = self.imagesCateg[2]
+        }
+        self.reloadUImageView()
+    }
+    
     @IBAction func shareButtonAction(sender: UIButton) {
     }
     
     @IBAction func showMenu(sender: AnyObject)
     {
         var viewMask:UIView = UIView(frame:self.menuView!.frame)
-        var menuFrame:CGRect = self.menuView!.frame
-
-        if self.menuIsShow == true
+        
+        if self.menuView?.isShow == true
         {
-            menuFrame.origin.y -= menuFrame.size.height
-            self.menuIsShow = false
+            self.menuView?.hideMenu()
         }
         else
         {
-            menuFrame.origin.y += menuFrame.size.height
-            self.menuIsShow = true
+            self.menuView?.showMenu()
         }
         UIView.animateWithDuration(1, animations: { () -> Void in
-            self.menuView?.frame = menuFrame
             self.view.layoutIfNeeded()
-            
         })
-        
-        
     }
     
     @IBAction func menuButtonAction(sender: UIButton) {
     }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    override func canBecomeFirstResponder() -> Bool {
+        return true
+    }
+    
+
 }
 
