@@ -10,8 +10,9 @@ import UIKit
 import DynamicBlurView
 import GPUImage
 import Parse
+import MBProgressHUD
 
-let    MAXSHAKES:Int = 5
+let    MAXSHAKES:Int = 8
 let    BLURRADIUSPIX:CGFloat = 20
 let    MENUHEIGHT:CGFloat = 180.0
 enum messageStatus: String {
@@ -48,6 +49,8 @@ class ViewController: UIViewController {
         self.shareButton.layer.cornerRadius = 6
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "newData", name: "newDatas", object: nil)
         self.loadData()
+        self.photoImageView.hidden = true
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -86,7 +89,9 @@ class ViewController: UIViewController {
     
     func newData()
     {
-        self.loadData()
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.loadData()
+        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -130,6 +135,8 @@ class ViewController: UIViewController {
             if results != nil && images != nil
             {
                 self.initDatasFromResults(results, images: images)
+                MBProgressHUD.hideHUDForView(self.view, animated: true)
+                self.photoImageView.hidden = false
             }
             else
             {
@@ -140,6 +147,8 @@ class ViewController: UIViewController {
                     {
                         self.initDatasFromResults(results, images: images)
                     }
+                    MBProgressHUD.hideHUDForView(self.view, animated: true)
+                    self.photoImageView.hidden = false
                 }
             }
         }
@@ -186,7 +195,7 @@ class ViewController: UIViewController {
         return image
     }
     
-    func blurWithGPUImageGaussian(image: UIImage, pixelRadius:CGFloat) -> UIImage
+    func blurWithGPUImageGaussian(image: UIImage!, pixelRadius:CGFloat) -> UIImage
     {
         var  gpuBlurGaussianFilter:GPUImageGaussianBlurFilter = GPUImageGaussianBlurFilter()
         gpuBlurGaussianFilter.blurRadiusInPixels = pixelRadius
@@ -223,11 +232,14 @@ class ViewController: UIViewController {
                 println(self.blurProgress)
                 self.photoImageView.image = nil
                 self.photoImageView.image = self.imagesBlurred[self.blurProgress]
+                let i:Float = 1.0/Float(MAXSHAKES)
+                self.shareButton.alpha = self.shareButton.alpha + CGFloat(i)
                 self.blurProgress = self.blurProgress + 1
             }
             else
             {
                 self.photoImageView.image = self.imagesBlurred.last
+                self.shareButton.alpha = 1
             }
         }
     }
@@ -236,6 +248,7 @@ class ViewController: UIViewController {
     
     func reloadUImageView()
     {
+        self.shareButton.alpha = 0
         self.photoImageView.image = self.imagesBlurred[0]
     }
     
@@ -278,17 +291,29 @@ class ViewController: UIViewController {
     @IBAction func showMenu(sender: AnyObject)
     {
         var viewMask:UIView = UIView(frame:self.menuView!.frame)
+        var color:UIColor?
         
         if self.menuView?.isShow == true
         {
-            self.menuView?.hideMenu()
+            color = self.view.backgroundColor
+            self.menuView!.hideMenu()
         }
         else
         {
+            color = self.menuView!.backgroundColor
             self.menuView?.showMenu()
         }
+        /*UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+        self.view.layoutIfNeeded()
+        
+        self.viewContainButton.backgroundColor = color!
+        
+        }) { (completed:Bool) -> Void in
+        
+        }*/
         UIView.animateWithDuration(1, animations: { () -> Void in
             self.view.layoutIfNeeded()
+            self.viewContainButton.backgroundColor = color!
         })
     }
     
@@ -302,6 +327,6 @@ class ViewController: UIViewController {
         return true
     }
     
-
+    
 }
 

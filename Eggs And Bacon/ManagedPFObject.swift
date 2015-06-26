@@ -12,22 +12,35 @@ import Parse
 class ManagedPFObject: NSObject {
     
     //class func getDailyPictures(completionBlock:(results:Array<Dictionary<String, AnyObject>>?, error: NSError?) -> ())
-    class func getDailyPictures(completionBlock:(results:Array<PFObject>?, images:Array<UIImage>?, error: NSError?) -> ())
+    
+    class func minMaxDate() -> (dateMin:NSDate, dateMax:NSDate)
     {
         var calendar:NSCalendar = NSCalendar.currentCalendar()
         var dateComponents:NSDateComponents = calendar.components(NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour, fromDate: NSDate())
         dateComponents.setValue(6, forComponent: NSCalendarUnit.CalendarUnitHour)
         
         var morning:NSDate = calendar.dateFromComponents(dateComponents)!
-        var query:PFQuery = PFQuery(className: "Pictures")
         
-        query.whereKey("dateToReveal", greaterThan: morning)
+        dateComponents.day = dateComponents.day + 1
+        var last:NSDate = calendar.dateFromComponents(dateComponents)!
+        
+        return (morning, last)
+    }
+    
+    
+    class func getDailyPictures(completionBlock:(results:Array<PFObject>?, images:Array<UIImage>?, error: NSError?) -> ())
+    {
+        let dateBounds = ManagedPFObject.minMaxDate()
+        
+        var query:PFQuery = PFQuery(className: "Pictures")
+        query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
+        query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
+        
         query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
             println(results)
             
             if results != nil && results?.count > 0
             {
-                //var objAndImg:Array<Dictionary<String, AnyObject>> = Array<Dictionary<String, AnyObject>>()
                 var pfobjs:Array<PFObject> = Array<PFObject>()
                 var imgs:Array<UIImage> = Array<UIImage>()
                 var i:Int = 0
@@ -41,7 +54,6 @@ class ManagedPFObject: NSObject {
                             
                             if (data != nil)
                             {
-                                //var dict:Dictionary<String, AnyObject> = Dictionary<String, AnyObject>(dictionaryLiteral: ("object", object), ("image", UIImage(data: data!)!))
                                 pfobjs.append(object)
                                 imgs.append(UIImage(data: data!)!)
                             }
@@ -51,18 +63,25 @@ class ManagedPFObject: NSObject {
                             }
                             if i == (results!.count - 1)
                             {
-                                PFObject.pinAllInBackground(pfobjs, block: { (success:Bool, error:NSError?) -> Void in
-                                    if success == true
-                                    {
-                                        println("All obj have been pinned")
-                                    }
-                                    else
-                                    {
-                                        println("Error when pin object")
-                                        println(error)
-                                    }
+                                if pfobjs.count == results!.count && imgs.count == results!.count
+                                {
+                                    PFObject.pinAllInBackground(pfobjs, block: { (success:Bool, error:NSError?) -> Void in
+                                        if success == true
+                                        {
+                                            println("All obj have been pinned")
+                                        }
+                                        else
+                                        {
+                                            println("Error when pin object")
+                                            println(error)
+                                        }
+                                    })
                                     completionBlock(results: pfobjs, images:imgs, error: nil)
-                                })
+                                }
+                                else
+                                {
+                                    completionBlock(results: nil, images: nil, error: nil)
+                                }
                             }
                             i = i + 1
                         })
@@ -82,15 +101,12 @@ class ManagedPFObject: NSObject {
     
     class func getLocalDailyPictures(completionBlock:(results:Array<PFObject>?, images:Array<UIImage>?, error: NSError?) -> ())
     {
-        var calendar:NSCalendar = NSCalendar.currentCalendar()
-        var dateComponents:NSDateComponents = calendar.components(NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour, fromDate: NSDate())
-        dateComponents.setValue(6, forComponent: NSCalendarUnit.CalendarUnitHour)
+        let dateBounds = ManagedPFObject.minMaxDate()
         
-        var morning:NSDate = calendar.dateFromComponents(dateComponents)!
         var query:PFQuery = PFQuery(className: "Pictures")
-        
+        query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
+        query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
         query.fromLocalDatastore()
-        query.whereKey("dateToReveal", greaterThan: morning)
         query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
             println(results)
             
@@ -108,7 +124,6 @@ class ManagedPFObject: NSObject {
                             
                             if (data != nil)
                             {
-                                //var dict:Dictionary<String, AnyObject> = Dictionary<String, AnyObject>(dictionaryLiteral: ("object", object), ("image", UIImage(data: data!)!))
                                 pfobjs.append(object)
                                 imgs.append(UIImage(data: data!)!)
                             }
@@ -118,18 +133,25 @@ class ManagedPFObject: NSObject {
                             }
                             if i == (results!.count - 1)
                             {
-                                PFObject.pinAllInBackground(pfobjs, block: { (success:Bool, error:NSError?) -> Void in
-                                    if success == true
-                                    {
-                                        println("All obj have been pinned")
-                                    }
-                                    else
-                                    {
-                                        println("Error when pin object")
-                                        println(error)
-                                    }
-                                })
-                                completionBlock(results: pfobjs, images:imgs, error: nil)
+                                if pfobjs.count == results!.count && imgs.count == results!.count
+                                {
+                                    PFObject.pinAllInBackground(pfobjs, block: { (success:Bool, error:NSError?) -> Void in
+                                        if success == true
+                                        {
+                                            println("All obj have been pinned")
+                                        }
+                                        else
+                                        {
+                                            println("Error when pin object")
+                                            println(error)
+                                        }
+                                    })
+                                    completionBlock(results: pfobjs, images:imgs, error: nil)
+                                }
+                                else
+                                {
+                                    completionBlock(results: nil, images: nil, error: nil)
+                                }
                             }
                             i = i + 1
                         })

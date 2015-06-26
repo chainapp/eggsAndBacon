@@ -24,7 +24,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="model.png" translatesAutoresizingMaskIntoConstraints="NO" id="IW5-Dj-5Ab">
-                                <rect key="frame" x="0.0" y="79" width="375" height="472"/>
+                                <rect key="frame" x="0.0" y="79" width="375" height="375"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="375" id="0tK-Bp-utD"/>
+                                </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dbj-BB-avz">
                                 <rect key="frame" x="56" y="607" width="262" height="40"/>
@@ -42,8 +45,8 @@
                                     <action selector="shareButtonAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="vci-Pk-3UR"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cwn-bP-unn">
-                                <rect key="frame" x="56" y="566" width="263" height="33"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Cwn-bP-unn">
+                                <rect key="frame" x="56" y="469" width="263" height="130"/>
                                 <fontDescription key="fontDescription" name="Satisfy" family="Satisfy" pointSize="23"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

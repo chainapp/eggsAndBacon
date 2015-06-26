@@ -63,22 +63,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     //MARK:  BACKGROUND Fetch
     func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        ManagedPFObject.getDailyPictures { (results, images, error) -> () in
-            if error != nil
-            {
-                println("Error fetchInBackground")
-                println(error)
-                completionHandler(UIBackgroundFetchResult.Failed)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            
+            
+            ManagedPFObject.getDailyPictures { (results, images, error) -> () in
+                if error != nil
+                {
+                    println("Error fetchInBackground")
+                    println(error)
+                    completionHandler(UIBackgroundFetchResult.Failed)
+                }
+                else
+                {
+                    NSNotificationCenter.defaultCenter().postNotificationName("newDatas", object: nil)
+                    completionHandler(UIBackgroundFetchResult.NewData)
+                }
             }
-            else
-            {
-                NSNotificationCenter.defaultCenter().postNotificationName("newDatas", object: nil)
-                completionHandler(UIBackgroundFetchResult.NewData)
-            }            
-        }
+        })
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
+        
         ManagedPFObject.getDailyPictures { (results, images, error) -> () in
             if error != nil
             {
@@ -91,8 +99,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 NSNotificationCenter.defaultCenter().postNotificationName("newDatas", object: nil)
                 completionHandler(UIBackgroundFetchResult.NewData)
             }
-            
         }
+        })
+
     }
 
 }

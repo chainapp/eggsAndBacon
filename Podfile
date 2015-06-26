@@ -7,6 +7,7 @@ pod 'GPUImage', '~> 0.1'
 pod "DynamicBlurView"
 use_frameworks!
 pod 'Parse'
+pod 'MBProgressHUD'
 
 end
 
