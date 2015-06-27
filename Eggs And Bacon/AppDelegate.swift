@@ -76,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 else
                 {
                     NSNotificationCenter.defaultCenter().postNotificationName("newDatas", object: nil)
+                    UIApplication.sharedApplication().applicationIconBadgeNumber = 1
                     completionHandler(UIBackgroundFetchResult.NewData)
                 }
             }
@@ -97,6 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             else
             {
                 NSNotificationCenter.defaultCenter().postNotificationName("newDatas", object: nil)
+                UIApplication.sharedApplication().applicationIconBadgeNumber = 1
                 completionHandler(UIBackgroundFetchResult.NewData)
             }
         }

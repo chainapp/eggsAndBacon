@@ -55,6 +55,8 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+
         //Create Menu
         var menu:EABMenuView = EABMenuView.instanceFromNib()
         var constraintHMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: MENUHEIGHT)
