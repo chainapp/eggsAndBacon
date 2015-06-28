@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 
+//TODO Remettre au propre le systeme d'update ^^
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -27,7 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Background
         UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
-        
         return true
     }
     
@@ -47,9 +48,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        
+        //var local:UILocalNotification = UILocalNotification()
+        
+        //local.applicationIconBadgeNumber = 1
+       // local.repeatInterval = NSCalendarUnit.CalendarUnitMinute
+       //local.fireDate = NSDate(timeIntervalSinceNow: 1)
+      //  UIApplication.sharedApplication().scheduleLocalNotification(local)
+        
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
@@ -63,14 +75,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     //MARK:  BACKGROUND Fetch
     func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        self.fetchNewDatas(fetchCompletionHandler: completionHandler)
+    }
+    
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        self.fetchNewDatas(fetchCompletionHandler: completionHandler)
+    }
+
+    func fetchNewDatas(fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void)
+    {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
-            
+            //Add local fetch before to avoid always have badge
             ManagedPFObject.getDailyPictures { (results, images, error) -> () in
-                if error != nil
+                if error != nil || results == nil || results?.count == 0
                 {
-                    println("Error fetchInBackground")
+                    println("Error fetchInBackground no data")
                     println(error)
+                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
                     completionHandler(UIBackgroundFetchResult.Failed)
                 }
                 else
@@ -82,29 +105,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
     }
-    
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-
-        
-        ManagedPFObject.getDailyPictures { (results, images, error) -> () in
-            if error != nil
-            {
-                println("Error fetchInBackground")
-                println(error)
-                completionHandler(UIBackgroundFetchResult.Failed)
-            }
-            else
-            {
-                NSNotificationCenter.defaultCenter().postNotificationName("newDatas", object: nil)
-                UIApplication.sharedApplication().applicationIconBadgeNumber = 1
-                completionHandler(UIBackgroundFetchResult.NewData)
-            }
-        }
-        })
-
-    }
-
 }
 
