@@ -11,21 +11,26 @@ import GPUImage
 import Parse
 import MBProgressHUD
 
-let    MAXSHAKES:Int = 8
+let    MAXSHAKES:Int = 10
 let    BLURRADIUSPIX:CGFloat = 20
 let    MENUHEIGHT:CGFloat = 180.0
+
 enum messageStatus: String {
     case notShaked = "Your daily breakfast has arrived!\nShake to eat it ..."
     case Shaked = "Et voilà !\nSee you tomorrow at breakfast time ..."
 }
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtocol {
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var viewContainButton: UIView!
     @IBOutlet weak var buttonShowMenu: UIButton!
+    var                shakeHelper:ShakeGesture?
+    
     var       blurProgress:Int = 0
     let       imageOriginal:UIImage = UIImage(named: "model")!
     var       imagesBlurred:Array<UIImage> = Array<UIImage>()
@@ -37,8 +42,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // titleLabel
-        // self.titleLabel.font = UIFont(name: "Satisfy", size: 35)
+        self.titleLabel.font = UIFont(name: "Satisfy", size: 25)
         
         // messageLabel
         self.messageLabel.text = messageStatus.notShaked.rawValue
@@ -52,10 +58,8 @@ class ViewController: UIViewController {
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-        //Create Menu
+    func createMenu()
+    {
         var menu:EABMenuView = EABMenuView.instanceFromNib()
         menu.buttonSendFeedBack.addTarget(self, action: "sendMailToStaff", forControlEvents: UIControlEvents.TouchUpInside)
         var constraintHMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: MENUHEIGHT)
@@ -75,24 +79,55 @@ class ViewController: UIViewController {
         self.menuView?.segmentedIndexType.selectedSegmentIndex = 0
         self.menuView?.segmentedIndexType.addTarget(self, action: "valueSegmentedIndexChanged", forControlEvents: UIControlEvents.ValueChanged)
         self.view.bringSubviewToFront(self.viewContainButton)
+        self.titleLabel.textColor = self.menuView?.backgroundColor
         self.view.layoutIfNeeded()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        self.becomeFirstResponder()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.scrollView.delegate = self
+        self.scrollView.maximumZoomScale = 10.0
+        self.scrollView.contentSize = self.photoImageView.bounds.size
+        self.photoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        //Create Menu
+        self.createMenu()
+        //Initiate shake gesture
+        self.shakeHelper = ShakeGesture()
+        self.shakeHelper?.delegate = self
+        self.shakeHelper?.loadCoreMotion()
+        
+    }
+    
+    //MARK: ShakeGestureDelegate
+    
+    func didFindAShake() {
+        if self.blurProgress < (self.imagesBlurred.count - 1)
+        {
+            println(self.blurProgress)
+            self.photoImageView.image = nil
+            self.photoImageView.image = self.imagesBlurred[self.blurProgress]
+            let i:Float = 1.0/Float(MAXSHAKES)
+            self.shareButton.alpha = self.shareButton.alpha + CGFloat(i)
+            self.blurProgress = self.blurProgress + 1
+        }
+        else
+        {
+            self.photoImageView.image = self.imagesBlurred.last
+            self.shareButton.alpha = 1
+        }
+
+    }
+    
+    //Mark: Func update UI
+    
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return self.photoImageView
     }
     
     func updateUI()
     {
         self.valueSegmentedIndexChanged()
-    }
-    
-    func newData()
-    {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.loadData()
-        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -101,6 +136,13 @@ class ViewController: UIViewController {
     }
     
     //MARK: Load data
+    
+    func newData()
+    {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.loadData()
+        })
+    }
     
     func initDatasFromResults(results: Array<PFObject>?, images: Array<UIImage>?)
     {
@@ -203,48 +245,6 @@ class ViewController: UIViewController {
         return gpuBlurGaussianFilter.imageByFilteringImage(image)
     }
     
-    //MARK: Motion
-    
-    override func motionBegan(motion: UIEventSubtype, withEvent event: UIEvent) {
-        
-        if motion == UIEventSubtype.MotionShake
-        {
-            if self.blurProgress < (self.imagesBlurred.count - 1)
-            {
-                println(self.blurProgress)
-                self.photoImageView.image = nil
-                self.photoImageView.image = self.imagesBlurred[self.blurProgress]
-                self.blurProgress = self.blurProgress + 1
-            }
-            else
-            {
-                self.photoImageView.image = self.imagesBlurred.last
-            }
-        }
-    }
-    
-    
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
-        
-        if motion == UIEventSubtype.MotionShake
-        {
-            if self.blurProgress < (self.imagesBlurred.count - 1)
-            {
-                println(self.blurProgress)
-                self.photoImageView.image = nil
-                self.photoImageView.image = self.imagesBlurred[self.blurProgress]
-                let i:Float = 1.0/Float(MAXSHAKES)
-                self.shareButton.alpha = self.shareButton.alpha + CGFloat(i)
-                self.blurProgress = self.blurProgress + 1
-            }
-            else
-            {
-                self.photoImageView.image = self.imagesBlurred.last
-                self.shareButton.alpha = 1
-            }
-        }
-    }
-    
     //MARK: Action
     
     func reloadUImageView()
@@ -296,15 +296,18 @@ class ViewController: UIViewController {
     {
         var viewMask:UIView = UIView(frame:self.menuView!.frame)
         var color:UIColor?
+        var oldColor:UIColor?
         
         if self.menuView?.isShow == true
         {
             color = self.view.backgroundColor
+            oldColor = self.menuView?.backgroundColor
             self.menuView!.hideMenu()
         }
         else
         {
             color = self.menuView!.backgroundColor
+            oldColor = self.view.backgroundColor
             self.menuView?.showMenu()
         }
         /*UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
@@ -318,6 +321,7 @@ class ViewController: UIViewController {
         UIView.animateWithDuration(1, animations: { () -> Void in
             self.view.layoutIfNeeded()
             self.viewContainButton.backgroundColor = color!
+            self.titleLabel.textColor = oldColor
         })
     }
     
@@ -336,10 +340,5 @@ class ViewController: UIViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    override func canBecomeFirstResponder() -> Bool {
-        return true
-    }
-    
-    
 }
 
