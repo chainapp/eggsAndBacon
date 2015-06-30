@@ -96,7 +96,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.shakeHelper = ShakeGesture()
         self.shakeHelper?.delegate = self
         self.shakeHelper?.loadCoreMotion()
-        
     }
     
     //MARK: ShakeGestureDelegate
@@ -116,7 +115,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             self.photoImageView.image = self.imagesBlurred.last
             self.shareButton.alpha = 1
         }
-
     }
     
     //Mark: Func update UI

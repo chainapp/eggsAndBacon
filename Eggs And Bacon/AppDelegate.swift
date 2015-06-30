@@ -8,6 +8,8 @@
 
 import UIKit
 import Parse
+import Fabric
+import Crashlytics
 
 //TODO Remettre au propre le systeme d'update ^^
 
@@ -20,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Parse.enableLocalDatastore()
         Parse.setApplicationId("7vXQaUViTCx03Xth3v6OTx5kk64YrDjuJwYJLI9m", clientKey: "wk1NBzEKqRyV2fJz0bWIzKY9i3TxnFEfyz6k50bU")
-        
+        Fabric.with([Crashlytics()])
         let userNotificationTypes = (UIUserNotificationType.Alert |  UIUserNotificationType.Badge |  UIUserNotificationType.Sound);
         
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)

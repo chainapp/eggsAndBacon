@@ -10,6 +10,8 @@
 		58053ED61B3C356400A92A19 /* ManagedPFObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58053ED51B3C356400A92A19 /* ManagedPFObject.swift */; };
 		587C4FD71B3AF7F00033C0A7 /* EABMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 587C4FD61B3AF7F00033C0A7 /* EABMenuView.xib */; };
 		587C4FD91B3B006B0033C0A7 /* EABMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587C4FD81B3B006B0033C0A7 /* EABMenuView.swift */; };
+		58B23F9A1B430467004F0BF2 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B23F981B430467004F0BF2 /* Fabric.framework */; };
+		58B23F9B1B430467004F0BF2 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B23F991B430467004F0BF2 /* Crashlytics.framework */; };
 		58F0B1981B42D46400E87652 /* ShakeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F0B1971B42D46400E87652 /* ShakeGesture.swift */; };
 		58F0B19A1B42EA1E00E87652 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F0B1991B42EA1E00E87652 /* CoreMotion.framework */; };
 		E8FE3CFC1B39A015005939DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FE3CFB1B39A015005939DF /* AppDelegate.swift */; };
@@ -40,6 +42,8 @@
 		58053ED51B3C356400A92A19 /* ManagedPFObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedPFObject.swift; sourceTree = "<group>"; };
 		587C4FD61B3AF7F00033C0A7 /* EABMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EABMenuView.xib; sourceTree = "<group>"; };
 		587C4FD81B3B006B0033C0A7 /* EABMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EABMenuView.swift; sourceTree = "<group>"; };
+		58B23F981B430467004F0BF2 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		58B23F991B430467004F0BF2 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		58DD687B1B39E6520012BCFF /* Eggs And Bacon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Eggs And Bacon-Bridging-Header.h"; sourceTree = "<group>"; };
 		58F0B1971B42D46400E87652 /* ShakeGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShakeGesture.swift; sourceTree = "<group>"; };
 		58F0B1991B42EA1E00E87652 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -66,6 +70,8 @@
 			files = (
 				58F0B19A1B42EA1E00E87652 /* CoreMotion.framework in Frameworks */,
 				FBDF7590250702E9D8E4BF70 /* Pods_Eggs_And_Bacon.framework in Frameworks */,
+				58B23F9B1B430467004F0BF2 /* Crashlytics.framework in Frameworks */,
+				58B23F9A1B430467004F0BF2 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +106,8 @@
 		E8FE3CED1B39A015005939DF = {
 			isa = PBXGroup;
 			children = (
+				58B23F981B430467004F0BF2 /* Fabric.framework */,
+				58B23F991B430467004F0BF2 /* Crashlytics.framework */,
 				E8FE3CF81B39A015005939DF /* Eggs And Bacon */,
 				E8FE3D0E1B39A015005939DF /* Eggs And BaconTests */,
 				E8FE3CF71B39A015005939DF /* Products */,
@@ -200,6 +208,7 @@
 				E8FE3CF41B39A015005939DF /* Resources */,
 				57BA7827FE4639EC984C0617 /* Copy Pods Resources */,
 				A306C4FEAA5ACFA711B646A6 /* Embed Pods Frameworks */,
+				58B23F971B43042D004F0BF2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -310,6 +319,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		58B23F971B43042D004F0BF2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run edafc5b84a570f8d18d6ce8ebfce7e39d00d0d29 8fabaa3c3f6e99091642f05ac12700612bce362795e70a00ce654d890105465d";
 		};
 		A306C4FEAA5ACFA711B646A6 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
