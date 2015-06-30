@@ -14,7 +14,6 @@ class EABMenuView: UIView {
     @IBOutlet weak var segmentedIndexType: UISegmentedControl!
     var       isShow:Bool = false
     var       constraintTop:NSLayoutConstraint?
-    
     @IBOutlet weak var buttonSendFeedBack: UIButton!
     @IBOutlet weak var buttonShareApp: UIButton!
     
