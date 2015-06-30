@@ -15,6 +15,9 @@ class EABMenuView: UIView {
     var       isShow:Bool = false
     var       constraintTop:NSLayoutConstraint?
     
+    @IBOutlet weak var buttonSendFeedBack: UIButton!
+    @IBOutlet weak var buttonShareApp: UIButton!
+    
     class func instanceFromNib() -> EABMenuView {
         return UINib(nibName: "EABMenuView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! EABMenuView
     }

@@ -158,6 +158,8 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="buttonSendFeedBack" destination="O6P-9e-QSo" id="ryR-UF-MPh"/>
+                <outlet property="buttonShareApp" destination="5bW-K7-13z" id="1QD-qh-7lO"/>
                 <outlet property="segmentedIndexType" destination="3OH-Kz-etv" id="MvX-TO-90O"/>
             </connections>
             <point key="canvasLocation" x="233" y="232.5"/>

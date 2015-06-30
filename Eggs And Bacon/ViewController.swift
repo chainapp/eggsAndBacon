@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import DynamicBlurView
 import GPUImage
 import Parse
 import MBProgressHUD
@@ -58,6 +57,7 @@ class ViewController: UIViewController {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         //Create Menu
         var menu:EABMenuView = EABMenuView.instanceFromNib()
+        menu.buttonSendFeedBack.addTarget(self, action: "sendMailToStaff", forControlEvents: UIControlEvents.TouchUpInside)
         var constraintHMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: MENUHEIGHT)
         let constraintWMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: self.view.bounds.size.width)
         menu.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -255,20 +255,23 @@ class ViewController: UIViewController {
     
     func valueSegmentedIndexChanged()
     {
-        self.blurProgress = 0
-        if self.menuView?.segmentedIndexType.selectedSegmentIndex == 0
+        if self.imagesCateg[0].count > 0
         {
-            self.imagesBlurred = self.imagesCateg[0]
+            self.blurProgress = 0
+            if self.menuView?.segmentedIndexType.selectedSegmentIndex == 0
+            {
+                self.imagesBlurred = self.imagesCateg[0]
+            }
+            else if self.menuView?.segmentedIndexType.selectedSegmentIndex == 1
+            {
+                self.imagesBlurred = self.imagesCateg[1]
+            }
+            else
+            {
+                self.imagesBlurred = self.imagesCateg[2]
+            }
+            self.reloadUImageView()
         }
-        else if self.menuView?.segmentedIndexType.selectedSegmentIndex == 1
-        {
-            self.imagesBlurred = self.imagesCateg[1]
-        }
-        else
-        {
-            self.imagesBlurred = self.imagesCateg[2]
-        }
-        self.reloadUImageView()
     }
     
     func share() {
@@ -318,8 +321,17 @@ class ViewController: UIViewController {
         })
     }
     
+    func sendMailToStaff()
+    {
+        let email = "ayrton@wim.fr"
+        let url = NSURL(string: "mailto:\(email)")
+        UIApplication.sharedApplication().openURL(url!)
+    }
+    
     @IBAction func menuButtonAction(sender: UIButton) {
     }
+    
+    
     
     override func prefersStatusBarHidden() -> Bool {
         return true
