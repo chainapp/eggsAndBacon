@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		58053ED61B3C356400A92A19 /* ManagedPFObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58053ED51B3C356400A92A19 /* ManagedPFObject.swift */; };
+		584852C81B4556230029F4E3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 584852C71B4556230029F4E3 /* AudioToolbox.framework */; };
 		587C4FD71B3AF7F00033C0A7 /* EABMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 587C4FD61B3AF7F00033C0A7 /* EABMenuView.xib */; };
 		587C4FD91B3B006B0033C0A7 /* EABMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587C4FD81B3B006B0033C0A7 /* EABMenuView.swift */; };
 		58B23F9A1B430467004F0BF2 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B23F981B430467004F0BF2 /* Fabric.framework */; };
@@ -40,6 +41,7 @@
 		1D26655A3D8DA0FE81F16AD0 /* Pods_Eggs_And_Bacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eggs_And_Bacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2996A33FE2612CF547BF1C99 /* Pods-Eggs And Bacon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eggs And Bacon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon.debug.xcconfig"; sourceTree = "<group>"; };
 		58053ED51B3C356400A92A19 /* ManagedPFObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedPFObject.swift; sourceTree = "<group>"; };
+		584852C71B4556230029F4E3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		587C4FD61B3AF7F00033C0A7 /* EABMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EABMenuView.xib; sourceTree = "<group>"; };
 		587C4FD81B3B006B0033C0A7 /* EABMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EABMenuView.swift; sourceTree = "<group>"; };
 		58B23F981B430467004F0BF2 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				584852C81B4556230029F4E3 /* AudioToolbox.framework in Frameworks */,
 				58F0B19A1B42EA1E00E87652 /* CoreMotion.framework in Frameworks */,
 				FBDF7590250702E9D8E4BF70 /* Pods_Eggs_And_Bacon.framework in Frameworks */,
 				58B23F9B1B430467004F0BF2 /* Crashlytics.framework in Frameworks */,
@@ -97,6 +100,7 @@
 		DB0BC18A93A650664CD2F34B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				584852C71B4556230029F4E3 /* AudioToolbox.framework */,
 				58F0B1991B42EA1E00E87652 /* CoreMotion.framework */,
 				1D26655A3D8DA0FE81F16AD0 /* Pods_Eggs_And_Bacon.framework */,
 			);

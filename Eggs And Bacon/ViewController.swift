@@ -10,6 +10,7 @@ import UIKit
 import GPUImage
 import Parse
 import MBProgressHUD
+import AudioToolbox
 
 let    MAXSHAKES:Int = 10
 let    BLURRADIUSPIX:CGFloat = 20
@@ -29,14 +30,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var viewContainButton: UIView!
     @IBOutlet weak var buttonShowMenu: UIButton!
-    var                shakeHelper:ShakeGesture?
     
-    var       blurProgress:Int = 0
-    let       imageOriginal:UIImage = UIImage(named: "model")!
-    var       imagesBlurred:Array<UIImage> = Array<UIImage>()
-    var       imagesCateg:Array<Array<UIImage>> = Array<Array<UIImage>>(count: 3, repeatedValue: Array<UIImage>())
-    var       menuView:EABMenuView?
-    var       menuIsShow:Bool? = false
+    var                shakeHelper:ShakeGesture?
+    var                blurProgress:Int = 0
+    var                imagesBlurred:Array<UIImage> = Array<UIImage>()
+    var                imagesCateg:Array<Array<UIImage>> = Array<Array<UIImage>>(count: 3, repeatedValue: Array<UIImage>())
+    var                 blurProgresses:[Int] = NSUserDefaults.standardUserDefaults().valueForKey("currentblurprogress") as? [Int] ?? [0, 0, 0]
+    var                 alphaProgress:[CGFloat] = [0.0, 0.0, 0.0]
+    var                 menuView:EABMenuView?
+    var                 menuIsShow:Bool? = false
     
     //MARK: View Lifecycle
     
@@ -101,14 +103,24 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     //MARK: ShakeGestureDelegate
     
     func didFindAShake() {
-        if self.blurProgress < (self.imagesBlurred.count - 1)
+        var blurProg = self.blurProgresses[(self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0)]
+        
+        if blurProg < (self.imagesBlurred.count - 1)
         {
-            println(self.blurProgress)
+            println(blurProg)
             self.photoImageView.image = nil
-            self.photoImageView.image = self.imagesBlurred[self.blurProgress]
+            self.photoImageView.image = self.imagesBlurred[blurProg]
             let i:Float = 1.0/Float(MAXSHAKES)
             self.shareButton.alpha = self.shareButton.alpha + CGFloat(i)
-            self.blurProgress = self.blurProgress + 1
+            blurProg = blurProg + 1
+            let index = (self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0)
+            self.blurProgresses[index] = blurProg
+            self.alphaProgress[index] = self.shareButton.alpha
+           
+            //Set the current blurprog and alpha to UserDefaults
+            NSUserDefaults.standardUserDefaults().setValue(self.blurProgresses, forKey: "currentblurprogress")
+            NSUserDefaults.standardUserDefaults().setValue(self.alphaProgress, forKey: "alphaprogress")
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         }
         else
         {
@@ -173,6 +185,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     {
         ManagedPFObject.getLocalDailyPictures { (results, images, error) -> () in
             println(images)
+            
+            //Init Blur and Alpha progress to their saved value
+            self.blurProgresses = NSUserDefaults.standardUserDefaults().valueForKey("currentblurprogress") as? [Int] ?? [0, 0, 0]
+            self.alphaProgress =            NSUserDefaults.standardUserDefaults().valueForKey("alphaprogress") as? [CGFloat] ?? [0.0, 0.0, 0.0]
             if results != nil && images != nil
             {
                 self.initDatasFromResults(results, images: images)
@@ -182,6 +198,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             else
             {
                 ManagedPFObject.getDailyPictures { (results, images, error) -> () in
+                    //Reset blur progress and alphaprogress
+                    self.blurProgresses = [0, 0, 0]
+                    self.alphaProgress = [0.0, 0.0, 0.0]
                     //println(results)
                     println(images)
                     if results != nil && images != nil
@@ -247,15 +266,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     func reloadUImageView()
     {
-        self.shareButton.alpha = 0
-        self.photoImageView.image = self.imagesBlurred[0]
+        let index = self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0
+        self.shareButton.alpha = self.alphaProgress[index]
+        self.photoImageView.image = self.imagesBlurred[self.blurProgresses[index]]
     }
     
     func valueSegmentedIndexChanged()
     {
         if self.imagesCateg[0].count > 0
         {
-            self.blurProgress = 0
             if self.menuView?.segmentedIndexType.selectedSegmentIndex == 0
             {
                 self.imagesBlurred = self.imagesCateg[0]
@@ -273,7 +292,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     }
     
     func share() {
-        let text = "Share your Eggs or your Bacon today!"
+        let text = "Share your Eggs or your Bacon today!\n@werck_a"
         
         if let url = NSURL(string: "http://www.urlsurlesitedapple.com") // On pourra mettre l'image ?
         {

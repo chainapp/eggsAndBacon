@@ -93,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if results == nil || results?.count == 0
                 {
                     ManagedPFObject.getDailyPictures { (results, images, error) -> () in
+                       
                         if error != nil || results == nil || results?.count == 0
                         {
                             println("Error fetchInBackground no data")
