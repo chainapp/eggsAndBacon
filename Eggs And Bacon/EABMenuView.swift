@@ -39,6 +39,24 @@ class EABMenuView: UIView {
         self.constraintTop?.constant = 0
     }
     
+    func getCategoryName() -> String
+    {
+        var category: String
+        if self.segmentedIndexType.selectedSegmentIndex == 0
+        {
+            category = "Eggs"
+        }
+        else if self.segmentedIndexType.selectedSegmentIndex == 1
+        {
+            category = "Both"
+        }
+        else
+        {
+            category = "Bacon"
+        }
+        return category
+    }
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

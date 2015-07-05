@@ -36,11 +36,11 @@ class ShakeGesture: NSObject {
                 
                 let yy = data.acceleration.y
                 let v = abs(yy - (self?.currentY ?? 0)) / updateTimeInterval
-                if v > 20
+                if v > 14
                 {
                     self?.delegate?.didFindAShake()
                 }
-                println("Vitesse: \(v)")
+                //println("Vitesse: \(v)")
             }
         }
     }

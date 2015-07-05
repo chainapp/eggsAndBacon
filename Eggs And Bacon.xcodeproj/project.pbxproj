@@ -15,6 +15,7 @@
 		58B23F9B1B430467004F0BF2 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B23F991B430467004F0BF2 /* Crashlytics.framework */; };
 		58F0B1981B42D46400E87652 /* ShakeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F0B1971B42D46400E87652 /* ShakeGesture.swift */; };
 		58F0B19A1B42EA1E00E87652 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F0B1991B42EA1E00E87652 /* CoreMotion.framework */; };
+		E828708A1B49511B003F3EBB /* LaunchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E82870891B49511B003F3EBB /* LaunchScreen.png */; };
 		E8FE3CFC1B39A015005939DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FE3CFB1B39A015005939DF /* AppDelegate.swift */; };
 		E8FE3CFE1B39A015005939DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FE3CFD1B39A015005939DF /* ViewController.swift */; };
 		E8FE3D011B39A015005939DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3CFF1B39A015005939DF /* Main.storyboard */; };
@@ -50,6 +51,7 @@
 		58F0B1971B42D46400E87652 /* ShakeGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShakeGesture.swift; sourceTree = "<group>"; };
 		58F0B1991B42EA1E00E87652 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		66266576EC30B50F1B681F03 /* Pods-Eggs And Bacon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eggs And Bacon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon.release.xcconfig"; sourceTree = "<group>"; };
+		E82870891B49511B003F3EBB /* LaunchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreen.png; sourceTree = "<group>"; };
 		E8FE3CF61B39A015005939DF /* Eggs And Bacon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eggs And Bacon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8FE3CFA1B39A015005939DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8FE3CFB1B39A015005939DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -60,7 +62,7 @@
 		E8FE3D0B1B39A015005939DF /* Eggs And BaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Eggs And BaconTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8FE3D101B39A015005939DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8FE3D111B39A015005939DF /* Eggs_And_BaconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eggs_And_BaconTests.swift; sourceTree = "<group>"; };
-		E8FE3D201B39B5BF005939DF /* Satisfy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satisfy-Regular.ttf"; sourceTree = "<group>"; };
+		E8FE3D201B39B5BF005939DF /* Satisfy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Satisfy-Regular.ttf"; path = "Eggs And Bacon/Satisfy-Regular.ttf"; sourceTree = SOURCE_ROOT; };
 		E8FE3D221B39B7A5005939DF /* model.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = model.png; sourceTree = "<group>"; };
 		E8FE3D241B39B7EB005939DF /* menuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuIcon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,8 @@
 		DB0BC18A93A650664CD2F34B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58B23F991B430467004F0BF2 /* Crashlytics.framework */,
+				58B23F981B430467004F0BF2 /* Fabric.framework */,
 				584852C71B4556230029F4E3 /* AudioToolbox.framework */,
 				58F0B1991B42EA1E00E87652 /* CoreMotion.framework */,
 				1D26655A3D8DA0FE81F16AD0 /* Pods_Eggs_And_Bacon.framework */,
@@ -107,11 +111,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E828708B1B4955ED003F3EBB /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				E82870891B49511B003F3EBB /* LaunchScreen.png */,
+				E8FE3D221B39B7A5005939DF /* model.png */,
+				E8FE3D241B39B7EB005939DF /* menuIcon.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		E828708C1B4955F9003F3EBB /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				E8FE3D201B39B5BF005939DF /* Satisfy-Regular.ttf */,
+			);
+			name = Font;
+			sourceTree = "<group>";
+		};
 		E8FE3CED1B39A015005939DF = {
 			isa = PBXGroup;
 			children = (
-				58B23F981B430467004F0BF2 /* Fabric.framework */,
-				58B23F991B430467004F0BF2 /* Crashlytics.framework */,
 				E8FE3CF81B39A015005939DF /* Eggs And Bacon */,
 				E8FE3D0E1B39A015005939DF /* Eggs And BaconTests */,
 				E8FE3CF71B39A015005939DF /* Products */,
@@ -143,9 +163,9 @@
 		E8FE3CF91B39A015005939DF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E8FE3D221B39B7A5005939DF /* model.png */,
-				E8FE3D201B39B5BF005939DF /* Satisfy-Regular.ttf */,
-				E8FE3D241B39B7EB005939DF /* menuIcon.png */,
+				E828708C1B4955F9003F3EBB /* Font */,
+				E828708B1B4955ED003F3EBB /* Images */,
+				58DD687B1B39E6520012BCFF /* Eggs And Bacon-Bridging-Header.h */,
 				E8FE3CFA1B39A015005939DF /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -173,7 +193,6 @@
 			children = (
 				E8FE3CFB1B39A015005939DF /* AppDelegate.swift */,
 				E8FE3CFD1B39A015005939DF /* ViewController.swift */,
-				58DD687B1B39E6520012BCFF /* Eggs And Bacon-Bridging-Header.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -295,6 +314,7 @@
 				E8FE3D211B39B5BF005939DF /* Satisfy-Regular.ttf in Resources */,
 				E8FE3D231B39B7A5005939DF /* model.png in Resources */,
 				E8FE3D061B39A015005939DF /* LaunchScreen.xib in Resources */,
+				E828708A1B49511B003F3EBB /* LaunchScreen.png in Resources */,
 				E8FE3D031B39A015005939DF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

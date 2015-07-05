@@ -12,9 +12,9 @@ import Parse
 import MBProgressHUD
 import AudioToolbox
 
-let    MAXSHAKES:Int = 10
-let    BLURRADIUSPIX:CGFloat = 20
-let    MENUHEIGHT:CGFloat = 180.0
+let    MAXSHAKES: Int = 10
+let    BLURRADIUSPIX: CGFloat = 20
+let    MENUHEIGHT: CGFloat = 180.0
 
 enum messageStatus: String {
     case notShaked = "Your daily breakfast has arrived!\nShake to eat it ..."
@@ -30,6 +30,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var viewContainButton: UIView!
     @IBOutlet weak var buttonShowMenu: UIButton!
+    @IBOutlet weak var labelUnlike: UILabel!
+    @IBOutlet weak var labelLike: UILabel!
+    @IBOutlet weak var tutoImageView: UIImageView!
+
     
     var                shakeHelper:ShakeGesture?
     var                blurProgress:Int = 0
@@ -51,12 +55,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         // messageLabel
         self.messageLabel.text = messageStatus.notShaked.rawValue
         self.messageLabel.font = UIFont(name: "Satisfy", size: 23)
+        
         // shareButton
         self.shareButton.titleLabel?.font = UIFont(name: "Satisfy", size: 13)
         self.shareButton.layer.cornerRadius = 6
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "newData", name: "newDatas", object: nil)
         self.loadData()
         self.photoImageView.hidden = true
+        self.tutoImageView.alpha = 0.0
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     }
     
@@ -64,6 +71,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     {
         var menu:EABMenuView = EABMenuView.instanceFromNib()
         menu.buttonSendFeedBack.addTarget(self, action: "sendMailToStaff", forControlEvents: UIControlEvents.TouchUpInside)
+        menu.buttonShareApp.addTarget(self, action: "share", forControlEvents: UIControlEvents.TouchUpInside)
+        
         var constraintHMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: MENUHEIGHT)
         let constraintWMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: self.view.bounds.size.width)
         menu.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -111,6 +120,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             self.photoImageView.image = nil
             self.photoImageView.image = self.imagesBlurred[blurProg]
             let i:Float = 1.0/Float(MAXSHAKES)
+            
+            self.tutoImageView.alpha = CGFloat(1.0 / Float(MAXSHAKES))
+            
             self.shareButton.alpha = self.shareButton.alpha + CGFloat(i)
             blurProg = blurProg + 1
             let index = (self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0)
@@ -188,7 +200,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             
             //Init Blur and Alpha progress to their saved value
             self.blurProgresses = NSUserDefaults.standardUserDefaults().valueForKey("currentblurprogress") as? [Int] ?? [0, 0, 0]
-            self.alphaProgress =            NSUserDefaults.standardUserDefaults().valueForKey("alphaprogress") as? [CGFloat] ?? [0.0, 0.0, 0.0]
+            self.alphaProgress = NSUserDefaults.standardUserDefaults().valueForKey("alphaprogress") as? [CGFloat] ?? [0.0, 0.0, 0.0]
             if results != nil && images != nil
             {
                 self.initDatasFromResults(results, images: images)
@@ -209,6 +221,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                     }
                     MBProgressHUD.hideHUDForView(self.view, animated: true)
                     self.photoImageView.hidden = false
+                    var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+                    if let tuto: AnyObject = defaults.objectForKey("tutorial") {
+                        self.tutoImageView.alpha = 0.0
+                    }
+                    else {
+                        self.tutoImageView.alpha = 1.0
+                        defaults.setObject(false, forKey: "tutorial")
+                        defaults.synchronize()
+                    }
                 }
             }
         }
@@ -266,6 +287,32 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     func reloadUImageView()
     {
+        let dateBounds = ManagedPFObject.minMaxDate()
+        
+        var query:PFQuery = PFQuery(className: "Pictures")
+        query.whereKey("category", equalTo: self.menuView!.getCategoryName())
+        query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
+        query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
+        query.fromLocalDatastore()
+        
+        query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
+            println(results)
+            
+            if let objects = results as? [PFObject] {
+                if objects.count >= 1
+                {
+                    if let data = objects.first
+                    {
+                        if let unlike = data["unlike"] as? Int, let like = data["like"] as? Int {
+                            self.labelUnlike.text = "\(unlike)"
+                            self.labelLike.text = "\(like)"
+                        }
+                        
+                    }
+                }
+            }
+        }
+        
         let index = self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0
         self.shareButton.alpha = self.alphaProgress[index]
         self.photoImageView.image = self.imagesBlurred[self.blurProgresses[index]]
@@ -292,18 +339,42 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     }
     
     func share() {
-        let text = "Share your Eggs or your Bacon today!\n@werck_a"
+        let dateBounds = ManagedPFObject.minMaxDate()
         
-        if let url = NSURL(string: "http://www.urlsurlesitedapple.com") // On pourra mettre l'image ?
-        {
-            let objectsToShare = [text, url]
-            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-            activityVC.excludedActivityTypes = [UIActivityTypeAirDrop, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePrint]
+        var query:PFQuery = PFQuery(className: "Pictures")
+        query.whereKey("category", equalTo: self.menuView!.getCategoryName())
+        query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
+        query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
+        query.fromLocalDatastore()
+        
+        query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
+            println(results)
             
-            self.presentViewController(activityVC, animated: true, completion: nil)
+            var text = "Share your Eggs or your Bacon today!"
+            
+            if let objects = results as? [PFObject] {
+                if objects.count >= 1 {
+                    if let data = objects.first {
+                        if let twitter = data["twitter"] as? String {
+                            text = "\(twitter)" + "\nShare your Eggs or Bacon today!"
+                        }
+                    }
+                }
+            }
+            // LinkMaker --> APPLE STORE
+            if let url = NSURL(string: "https://geo.itunes.apple.com/us/app/spotify-music/id324684580?mt=8") { // On pourra mettre l'image ?
+                let objectsToShare = [text, url]
+                let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+                activityVC.excludedActivityTypes = [UIActivityTypeAirDrop, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePrint]
+                
+                self.presentViewController(activityVC, animated: true, completion: nil)
+            }
         }
+        
+        
+        
+
     }
-    
     
     @IBAction func shareButtonAction(sender: UIButton) {
         self.share()
@@ -357,5 +428,72 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+    
+    @IBAction func unlikeButtonAction(sender: UIButton) {
+        let dateBounds = ManagedPFObject.minMaxDate()
+        
+        var query:PFQuery = PFQuery(className: "Pictures")
+        query.whereKey("category", equalTo: self.menuView!.getCategoryName())
+        query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
+        query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
+        
+        query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
+            println(results)
+            
+            if let objects = results as? [PFObject] {
+                if objects.count >= 1
+                {
+                    if let data = objects.first
+                    {
+                        if var unlike = data["unlike"] as? Int {
+                            unlike = unlike - 1
+                            data["unlike"] = unlike
+                            self.labelUnlike.text = "\(unlike)"
+                            
+                            data.saveInBackgroundWithBlock({ (results: Bool, error: NSError?) -> Void in
+                                println("Error ? = \(error)")
+                            })
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+    }
+    
+    @IBAction func likeButtonAction(sender: AnyObject) {
+        let dateBounds = ManagedPFObject.minMaxDate()
+        
+        var query:PFQuery = PFQuery(className: "Pictures")
+        query.whereKey("category", equalTo: self.menuView!.getCategoryName())
+        query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
+        query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
+
+        query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
+            println(results)
+            
+            if let objects = results as? [PFObject] {
+                if objects.count >= 1
+                {
+                    if let data = objects.first
+                    {
+                        if var like = data["like"] as? Int {
+                            like = like + 1
+                            data["like"] = like
+                            self.labelLike.text = "\(like)"
+                            
+                            data.saveInBackgroundWithBlock({ (results: Bool, error: NSError?) -> Void in
+                                println("Error ? = \(error)")
+                            })
+                        }
+
+                    }
+                }
+            }
+        }
+
+    }
+    
 }
 
