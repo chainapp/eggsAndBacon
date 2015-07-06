@@ -94,10 +94,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 {
                     ManagedPFObject.getDailyPictures { (results, images, error) -> () in
                        
-                        NSUserDefaults.standardUserDefaults().setNilValueForKey("currentblurprogress")
-                        NSUserDefaults.standardUserDefaults().setNilValueForKey("alphaprogress")
-                        
-                        
                         if error != nil || results == nil || results?.count == 0
                         {
                             println("Error fetchInBackground no data")

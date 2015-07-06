@@ -63,7 +63,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "newData", name: "newDatas", object: nil)
         self.loadData()
         self.photoImageView.hidden = true
-        self.tutoImageView.alpha = 0.0
+        self.tutoImageView.hidden = true
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     }
     
@@ -99,7 +99,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.scrollView.delegate = self
         self.scrollView.maximumZoomScale = 10.0
         self.scrollView.contentSize = self.photoImageView.bounds.size
-        self.photoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+      //  self.photoImageView.contentMode = UIViewContentMode.ScaleAspectFit
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         //Create Menu
         self.createMenu()
@@ -121,8 +121,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             self.photoImageView.image = self.imagesBlurred[blurProg]
             let i:Float = 1.0/Float(MAXSHAKES)
             
-            self.tutoImageView.alpha = CGFloat(1.0 / Float(MAXSHAKES))
-            
+            self.tutoImageView.hidden = true
             self.shareButton.alpha = self.shareButton.alpha + CGFloat(i)
             blurProg = blurProg + 1
             let index = (self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0)
@@ -132,6 +131,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             //Set the current blurprog and alpha to UserDefaults
             NSUserDefaults.standardUserDefaults().setValue(self.blurProgresses, forKey: "currentblurprogress")
             NSUserDefaults.standardUserDefaults().setValue(self.alphaProgress, forKey: "alphaprogress")
+            NSUserDefaults.standardUserDefaults().setValue(false, forKey: "tutorial")
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         }
         else
@@ -149,6 +149,18 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     func updateUI()
     {
+        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        if let tuto: Bool = defaults.objectForKey("tutorial") as? Bool
+        {
+            if tuto == false
+            {
+                self.tutoImageView.hidden = true
+            }
+        }
+        else
+        {
+            self.tutoImageView.hidden = false
+        }
         self.valueSegmentedIndexChanged()
     }
     
@@ -161,6 +173,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     func newData()
     {
+        self.blurProgresses = [0, 0, 0]
+        self.alphaProgress = [0.0, 0.0, 0.0]
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.loadData()
         })
@@ -211,6 +225,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             {
                 ManagedPFObject.getDailyPictures { (results, images, error) -> () in
                     //Reset blur progress and alphaprogress
+                   
                     self.blurProgresses = [0, 0, 0]
                     self.alphaProgress = [0.0, 0.0, 0.0]
                     //println(results)
@@ -221,15 +236,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                     }
                     MBProgressHUD.hideHUDForView(self.view, animated: true)
                     self.photoImageView.hidden = false
-                    var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-                    if let tuto: AnyObject = defaults.objectForKey("tutorial") {
-                        self.tutoImageView.alpha = 0.0
-                    }
-                    else {
-                        self.tutoImageView.alpha = 1.0
-                        defaults.setObject(false, forKey: "tutorial")
-                        defaults.synchronize()
-                    }
+                    
                 }
             }
         }
@@ -469,7 +476,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         query.whereKey("category", equalTo: self.menuView!.getCategoryName())
         query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
         query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
-
+        query.fromLocalDatastore()
         query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
             println(results)
             
@@ -491,8 +498,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                     }
                 }
             }
+            
         }
-
     }
     
 }
