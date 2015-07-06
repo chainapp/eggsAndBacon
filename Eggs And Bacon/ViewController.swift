@@ -33,7 +33,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     @IBOutlet weak var labelUnlike: UILabel!
     @IBOutlet weak var labelLike: UILabel!
     @IBOutlet weak var tutoImageView: UIImageView!
-
+    @IBOutlet weak var buttonUnlike: UIButton!
+    @IBOutlet weak var buttonLike: UIButton!
     
     var                shakeHelper:ShakeGesture?
     var                blurProgress:Int = 0
@@ -91,6 +92,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.menuView?.segmentedIndexType.addTarget(self, action: "valueSegmentedIndexChanged", forControlEvents: UIControlEvents.ValueChanged)
         self.view.bringSubviewToFront(self.viewContainButton)
         self.titleLabel.textColor = self.menuView?.backgroundColor
+        self.hideVotingElements()
         self.view.layoutIfNeeded()
     }
     
@@ -107,6 +109,16 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.shakeHelper = ShakeGesture()
         self.shakeHelper?.delegate = self
         self.shakeHelper?.loadCoreMotion()
+        var blurProg = self.blurProgresses[(self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0)]
+        
+        if blurProg < (self.imagesBlurred.count - 1)
+        {
+            self.hideVotingElements()
+        }
+        else
+        {
+            self.showVotingElements()
+        }
     }
     
     //MARK: ShakeGestureDelegate
@@ -136,12 +148,30 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         }
         else
         {
+            self.showVotingElements()
             self.photoImageView.image = self.imagesBlurred.last
             self.shareButton.alpha = 1
         }
     }
     
     //Mark: Func update UI
+    
+    
+    func showVotingElements()
+    {
+        self.labelLike.hidden = false
+        self.labelUnlike.hidden = false
+        self.buttonLike.hidden = false
+        self.buttonUnlike.hidden = false
+    }
+
+    func hideVotingElements()
+    {
+        self.labelLike.hidden = true
+        self.labelUnlike.hidden = true
+        self.buttonLike.hidden = true
+        self.buttonUnlike.hidden = true
+    }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return self.photoImageView
@@ -340,6 +370,16 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             else
             {
                 self.imagesBlurred = self.imagesCateg[2]
+            }
+            var blurProg = self.blurProgresses[(self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0)]
+            
+            if blurProg < (self.imagesBlurred.count - 1)
+            {
+                self.hideVotingElements()
+            }
+            else
+            {
+                self.showVotingElements()
             }
             self.reloadUImageView()
         }
