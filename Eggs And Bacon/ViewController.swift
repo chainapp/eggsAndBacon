@@ -39,12 +39,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     var                shakeHelper:ShakeGesture?
     var                blurProgress:Int = 0
     var                imagesBlurred:Array<UIImage> = Array<UIImage>()
-    var                imagesCateg:Array<Array<UIImage>> = Array<Array<UIImage>>(count: 3, repeatedValue: Array<UIImage>())
+    var                imagesCateg:Array<Array<UIImage>> = Array<Array<UIImage>>(count: 2, repeatedValue: Array<UIImage>())
     var                 blurProgresses:[Int] = NSUserDefaults.standardUserDefaults().valueForKey("currentblurprogress") as? [Int] ?? [0, 0, 0]
     var                 alphaProgress:[CGFloat] = [0.0, 0.0, 0.0]
     var                 menuView:EABMenuView?
     var                 menuIsShow:Bool? = false
-    
+    var                 currentCateg:Int = 0
     //MARK: View Lifecycle
     
     override func viewDidLoad() {
@@ -101,7 +101,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.scrollView.delegate = self
         self.scrollView.maximumZoomScale = 10.0
         self.scrollView.contentSize = self.photoImageView.bounds.size
-      //  self.photoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        self.photoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        self.photoImageView.clipsToBounds = true
+
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         //Create Menu
         self.createMenu()
@@ -124,7 +126,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     //MARK: ShakeGestureDelegate
     
     func didFindAShake() {
-        var blurProg = self.blurProgresses[(self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0)]
+        var blurProg = self.blurProgresses[self.currentCateg]
         
         if blurProg < (self.imagesBlurred.count - 1)
         {
@@ -136,7 +138,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             self.tutoImageView.hidden = true
             self.shareButton.alpha = self.shareButton.alpha + CGFloat(i)
             blurProg = blurProg + 1
-            let index = (self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0)
+            let index = self.currentCateg
             self.blurProgresses[index] = blurProg
             self.alphaProgress[index] = self.shareButton.alpha
            
@@ -156,6 +158,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     //Mark: Func update UI
     
+    func resizeImage(image:UIImage, newSize:CGSize) -> UIImage
+    {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
+        var newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
     
     func showVotingElements()
     {
@@ -221,15 +231,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             let o:PFObject = arrPFO[i]
             if o.objectForKey("category") as? String == "Eggs"
             {
-                self.imagesCateg[0] = self.prepareImages(imgs[i])
+                self.imagesCateg[0] = self.prepareImages(self.resizeImage(imgs[i], newSize: self.scrollView.bounds.size))
             }
-            else if o.objectForKey("category") as? String == "Both"
+            else if o.objectForKey("category") as? String == "Bacon"
             {
-                self.imagesCateg[1] = self.prepareImages(imgs[i])
-            }
-            else
-            {
-                self.imagesCateg[2] = self.prepareImages(imgs[i])
+                self.imagesCateg[1] = self.prepareImages(self.resizeImage(imgs[i], newSize: self.photoImageView.frame.size))
             }
             i = i + 1
         }
@@ -350,29 +356,20 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             }
         }
         
-        let index = self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0
+        let index = self.currentCateg
         self.shareButton.alpha = self.alphaProgress[index]
         self.photoImageView.image = self.imagesBlurred[self.blurProgresses[index]]
+        //self.photoImageView.image = self.imagesBlurred.last
+
     }
     
     func valueSegmentedIndexChanged()
     {
         if self.imagesCateg[0].count > 0
         {
-            if self.menuView?.segmentedIndexType.selectedSegmentIndex == 0
-            {
-                self.imagesBlurred = self.imagesCateg[0]
-            }
-            else if self.menuView?.segmentedIndexType.selectedSegmentIndex == 1
-            {
-                self.imagesBlurred = self.imagesCateg[1]
-            }
-            else
-            {
-                self.imagesBlurred = self.imagesCateg[2]
-            }
-            var blurProg = self.blurProgresses[(self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0)]
-            
+           self.currentCateg = self.menuView?.segmentedIndexType?.selectedSegmentIndex ?? 0
+           self.imagesBlurred = self.imagesCateg[currentCateg]
+            var blurProg = self.blurProgresses[self.currentCateg]
             if blurProg < (self.imagesBlurred.count - 1)
             {
                 self.hideVotingElements()
@@ -385,7 +382,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         }
     }
     
-    func share() {
+    func share()
+    {
         let dateBounds = ManagedPFObject.minMaxDate()
         
         var query:PFQuery = PFQuery(className: "Pictures")
@@ -409,7 +407,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                 }
             }
             // LinkMaker --> APPLE STORE
-            if let url = NSURL(string: "https://geo.itunes.apple.com/us/app/spotify-music/id324684580?mt=8") { // On pourra mettre l'image ?
+            if let url = NSURL(string: "https://geo.itunes.apple.com/us/app/spotify-music/id324684580?mt=8")
+            { // On pourra mettre l'image ?
                 let objectsToShare = [text, url]
                 let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
                 activityVC.excludedActivityTypes = [UIActivityTypeAirDrop, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePrint]
@@ -417,10 +416,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                 self.presentViewController(activityVC, animated: true, completion: nil)
             }
         }
-        
-        
-        
-
     }
     
     @IBAction func shareButtonAction(sender: UIButton) {
@@ -445,15 +440,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             oldColor = self.view.backgroundColor
             self.menuView?.showMenu()
         }
-        /*UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-        self.view.layoutIfNeeded()
-        
-        self.viewContainButton.backgroundColor = color!
-        
-        }) { (completed:Bool) -> Void in
-        
-        }*/
-        UIView.animateWithDuration(1, animations: { () -> Void in
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.view.layoutIfNeeded()
             self.viewContainButton.backgroundColor = color!
             self.titleLabel.textColor = oldColor
@@ -493,7 +480,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                     if let data = objects.first
                     {
                         if var unlike = data["unlike"] as? Int {
-                            unlike = unlike - 1
+                            unlike = unlike + 1
                             data["unlike"] = unlike
                             self.labelUnlike.text = "\(unlike)"
                             
