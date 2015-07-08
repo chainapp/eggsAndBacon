@@ -445,7 +445,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     func sendMailToStaff()
     {
-        let email = "ayrton@wim.fr"
+        let email = "contact@eggsandbacon.me"
         let url = NSURL(string: "mailto:\(email)")
         UIApplication.sharedApplication().openURL(url!)
     }
