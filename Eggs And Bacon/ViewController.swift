@@ -54,16 +54,16 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     func handle4S()
     {
-        self.buttonLike.hidden = true
-        self.buttonUnlike.hidden = true
-        self.labelLike.hidden = true
-        self.labelUnlike.hidden = true
         self.view.removeConstraint(self.constraintLabelHeartTop)
         self.view.removeConstraint(self.verticalHeartConstraint)
         var constraint:NSLayoutConstraint = NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.scrollView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 8)
         self.view.addConstraint(constraint)
         self.constraintHeightMessageLabel.constant = 20
         self.view.layoutIfNeeded()
+        self.buttonLike.hidden = true
+        self.buttonUnlike.hidden = true
+        self.labelLike.hidden = true
+        self.labelUnlike.hidden = true
     }
     
     override func viewDidLoad() {
