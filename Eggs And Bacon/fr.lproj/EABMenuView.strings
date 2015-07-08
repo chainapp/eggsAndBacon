@@ -1,0 +1,27 @@
+
+/* Class = "UISegmentedControl"; 3OH-Kz-etv.segmentTitles[0] = "Eggs"; ObjectID = "3OH-Kz-etv"; */
+"3OH-Kz-etv.segmentTitles[0]" = "Eggs";
+
+/* Class = "UISegmentedControl"; 3OH-Kz-etv.segmentTitles[1] = "Bacon"; ObjectID = "3OH-Kz-etv"; */
+"3OH-Kz-etv.segmentTitles[1]" = "Bacon";
+
+/* Class = "UIButton"; normalTitle = "Share your breakfast"; ObjectID = "5bW-K7-13z"; */
+"5bW-K7-13z.normalTitle" = "Partage ton petit-déjeuner!";
+
+/* Class = "UILabel"; text = "Notifications"; ObjectID = "GYo-9Z-EMN"; */
+"GYo-9Z-EMN.text" = "Notifications";
+
+/* Class = "UIButton"; normalTitle = "A word to the chef?"; ObjectID = "O6P-9e-QSo"; */
+"O6P-9e-QSo.normalTitle" = "Un commentaire pour le chef ?";
+
+/* Class = "UILabel"; text = "I want to eat"; ObjectID = "hkd-IC-9pL"; */
+"hkd-IC-9pL.text" = "Je veux manger";
+
+/* Class = "UISegmentedControl"; voK-FP-tDb.segmentTitles[0] = "On"; ObjectID = "voK-FP-tDb"; */
+"voK-FP-tDb.segmentTitles[0]" = "On";
+
+/* Class = "UISegmentedControl"; voK-FP-tDb.segmentTitles[1] = "3Days"; ObjectID = "voK-FP-tDb"; */
+"voK-FP-tDb.segmentTitles[1]" = "3/sem";
+
+/* Class = "UISegmentedControl"; voK-FP-tDb.segmentTitles[2] = "Off"; ObjectID = "voK-FP-tDb"; */
+"voK-FP-tDb.segmentTitles[2]" = "Off";

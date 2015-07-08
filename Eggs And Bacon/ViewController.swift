@@ -16,11 +16,6 @@ let    MAXSHAKES: Int = 10
 let    BLURRADIUSPIX: CGFloat = 20
 let    MENUHEIGHT: CGFloat = 180.0
 
-enum messageStatus: String {
-    case notShaked = "Your daily breakfast has arrived!\nShake to eat it ..."
-    case Shaked = "Et voilà !\nSee you tomorrow at breakfast time ..."
-}
-
 class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtocol {
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -54,7 +49,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.titleLabel.font = UIFont(name: "Satisfy", size: 25)
         
         // messageLabel
-        self.messageLabel.text = messageStatus.notShaked.rawValue
+        self.messageLabel.text = NSLocalizedString("NOT_SHAKED", comment: "")
         self.messageLabel.font = UIFont(name: "Satisfy", size: 23)
         
         // shareButton
@@ -65,6 +60,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.loadData()
         self.photoImageView.hidden = true
         self.tutoImageView.hidden = true
+        self.tutoImageView.image = UIImage(named: NSLocalizedString("TUTO_IMAGE", comment: ""))
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     }
     
@@ -401,7 +397,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                 if objects.count >= 1 {
                     if let data = objects.first {
                         if let twitter = data["twitter"] as? String {
-                            text = "\(twitter)" + "\nShare your Eggs or Bacon today!"
+                            text = "\(twitter)" + NSLocalizedString("TWITTER", comment: "")
                         }
                     }
                 }

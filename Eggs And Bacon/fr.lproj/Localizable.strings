@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  Eggs And Bacon
+
+  Created by Romain Arsac on 08/07/2015.
+  Copyright (c) 2015 Nyu Web Developpement. All rights reserved.
+*/
+
+"NOT_SHAKED" = "Le petit-déjeuner est servi!!\nShake pour le dévorer ...";
+"SHAKED" = "Et voilà !\nA demain pour un succulent petit-déjeuner ...";
+"TUTO_IMAGE" = "tuto_fr";
+"TWITTER" = " est servi(e) sur Eggs and Bacon ! Télécharge l'app tu vas te régaler!";
