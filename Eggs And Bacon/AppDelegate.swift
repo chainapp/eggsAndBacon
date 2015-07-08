@@ -87,6 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         self.fetchNewDatas(fetchCompletionHandler: completionHandler)
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 1
     }
     
     func fetchNewDatas(fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void)

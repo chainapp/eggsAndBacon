@@ -173,6 +173,8 @@
                         <outlet property="buttonLike" destination="8ti-Mc-lQd" id="Veq-my-9qn"/>
                         <outlet property="buttonShowMenu" destination="rdK-3k-P8x" id="bvy-7J-kKh"/>
                         <outlet property="buttonUnlike" destination="AUM-Td-sBr" id="XTp-Vs-W4d"/>
+                        <outlet property="constraintHeightMessageLabel" destination="sEx-IS-kui" id="k1F-AL-edi"/>
+                        <outlet property="constraintLabelHeartTop" destination="Cmq-Ll-MZ8" id="b9A-SZ-b63"/>
                         <outlet property="labelLike" destination="gbz-9S-xbb" id="F8P-je-UvN"/>
                         <outlet property="labelUnlike" destination="HaC-xB-3xY" id="lAc-h0-0na"/>
                         <outlet property="messageLabel" destination="Cwn-bP-unn" id="KjI-WV-VYD"/>
@@ -181,6 +183,7 @@
                         <outlet property="shareButton" destination="Dbj-BB-avz" id="w9V-4U-xXd"/>
                         <outlet property="titleLabel" destination="QuX-PU-1rF" id="UFY-x4-QKW"/>
                         <outlet property="tutoImageView" destination="s9S-6b-VQh" id="nZv-or-m28"/>
+                        <outlet property="verticalHeartConstraint" destination="Cmq-Ll-MZ8" id="lFP-Jz-9kA"/>
                         <outlet property="viewContainButton" destination="1Od-2S-Ja8" id="iiw-5z-pYd"/>
                     </connections>
                 </viewController>

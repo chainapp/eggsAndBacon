@@ -18,6 +18,12 @@ let    MENUHEIGHT: CGFloat = 180.0
 
 class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtocol {
     
+    
+    @IBOutlet weak var constraintLabelHeartTop: NSLayoutConstraint!
+    @IBOutlet weak var verticalHeartConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var constraintHeightMessageLabel: NSLayoutConstraint!
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var messageLabel: UILabel!
@@ -31,6 +37,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     @IBOutlet weak var buttonUnlike: UIButton!
     @IBOutlet weak var buttonLike: UIButton!
     
+    
+    
+    
     var                shakeHelper:ShakeGesture?
     var                blurProgress:Int = 0
     var                imagesBlurred:Array<UIImage> = Array<UIImage>()
@@ -41,6 +50,21 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     var                 menuIsShow:Bool? = false
     var                 currentCateg:Int = 0
     //MARK: View Lifecycle
+    
+    
+    func handle4S()
+    {
+        self.buttonLike.hidden = true
+        self.buttonUnlike.hidden = true
+        self.labelLike.hidden = true
+        self.labelUnlike.hidden = true
+        self.view.removeConstraint(self.constraintLabelHeartTop)
+        self.view.removeConstraint(self.verticalHeartConstraint)
+        var constraint:NSLayoutConstraint = NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.scrollView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 8)
+        self.view.addConstraint(constraint)
+        self.constraintHeightMessageLabel.constant = 20
+        self.view.layoutIfNeeded()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,6 +140,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         else
         {
             self.showVotingElements()
+        }
+        println(UIDevice.currentDevice().modelName)
+        if UIDevice.currentDevice().modelName == "iPhone 4S"
+        {
+            self.handle4S()            
         }
     }
     
