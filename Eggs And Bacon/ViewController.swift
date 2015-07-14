@@ -114,6 +114,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.titleLabel.textColor = self.menuView?.backgroundColor
         self.hideVotingElements()
         self.view.layoutIfNeeded()
+        self.menuView?.buttonShareApp.titleLabel?.textAlignment = NSTextAlignment.Center
+        self.menuView?.buttonSendFeedBack.titleLabel?.textAlignment = NSTextAlignment.Center
     }
     
     override func viewWillAppear(animated: Bool) {
