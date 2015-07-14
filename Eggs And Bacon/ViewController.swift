@@ -54,6 +54,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     func handle4S()
     {
+        
         self.view.removeConstraint(self.constraintLabelHeartTop)
         self.view.removeConstraint(self.verticalHeartConstraint)
         var constraint:NSLayoutConstraint = NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.scrollView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 8)
@@ -125,7 +126,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.scrollView.contentSize = self.photoImageView.bounds.size
         self.photoImageView.contentMode = UIViewContentMode.ScaleAspectFit
         self.photoImageView.clipsToBounds = true
-
+        
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         //Create Menu
         self.createMenu()
@@ -144,9 +145,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             self.showVotingElements()
         }
         println(UIDevice.currentDevice().modelName)
-        if UIDevice.currentDevice().modelName == "iPhone 4S"
+        if UIDevice.currentDevice().modelName == "iPhone 4S" ||  UIDevice.currentDevice().modelName == "Simulator"
         {
-            self.handle4S()            
+            self.handle4S()
         }
     }
     
@@ -168,7 +169,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             let index = self.currentCateg
             self.blurProgresses[index] = blurProg
             self.alphaProgress[index] = self.shareButton.alpha
-           
+            
             //Set the current blurprog and alpha to UserDefaults
             NSUserDefaults.standardUserDefaults().setValue(self.blurProgresses, forKey: "currentblurprogress")
             NSUserDefaults.standardUserDefaults().setValue(self.alphaProgress, forKey: "alphaprogress")
@@ -196,12 +197,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     func showVotingElements()
     {
-        self.labelLike.hidden = false
-        self.labelUnlike.hidden = false
-        self.buttonLike.hidden = false
-        self.buttonUnlike.hidden = false
+        if UIDevice.currentDevice().modelName != "iPhone 4S" &&  UIDevice.currentDevice().modelName != "Simulator"
+        {
+            self.labelLike.hidden = false
+            self.labelUnlike.hidden = false
+            self.buttonLike.hidden = false
+            self.buttonUnlike.hidden = false
+        }
     }
-
+    
     func hideVotingElements()
     {
         self.labelLike.hidden = true
@@ -288,7 +292,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             {
                 ManagedPFObject.getDailyPictures { (results, images, error) -> () in
                     //Reset blur progress and alphaprogress
-                   
+                    
                     self.blurProgresses = [0, 0, 0]
                     self.alphaProgress = [0.0, 0.0, 0.0]
                     //println(results)
@@ -387,15 +391,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.shareButton.alpha = self.alphaProgress[index]
         self.photoImageView.image = self.imagesBlurred[self.blurProgresses[index]]
         //self.photoImageView.image = self.imagesBlurred.last
-
+        
     }
     
     func valueSegmentedIndexChanged()
     {
         if self.imagesCateg[0].count > 0
         {
-           self.currentCateg = self.menuView?.segmentedIndexType?.selectedSegmentIndex ?? 0
-           self.imagesBlurred = self.imagesCateg[currentCateg]
+            self.currentCateg = self.menuView?.segmentedIndexType?.selectedSegmentIndex ?? 0
+            self.imagesBlurred = self.imagesCateg[currentCateg]
             var blurProg = self.blurProgresses[self.currentCateg]
             if blurProg < (self.imagesBlurred.count - 1)
             {
@@ -520,7 +524,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                 }
             }
         }
-
+        
     }
     
     @IBAction func likeButtonAction(sender: AnyObject) {
@@ -548,7 +552,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                                 println("Error ? = \(error)")
                             })
                         }
-
+                        
                     }
                 }
             }
