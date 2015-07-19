@@ -17,6 +17,7 @@ class EABMenuView: UIView {
     @IBOutlet weak var buttonSendFeedBack: UIButton!
     @IBOutlet weak var buttonShareApp: UIButton!
     
+    @IBOutlet weak var segmentNotif: UISegmentedControl!
     class func instanceFromNib() -> EABMenuView {
         return UINib(nibName: "EABMenuView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! EABMenuView
     }
@@ -57,6 +58,7 @@ class EABMenuView: UIView {
         return category
     }
     
+       
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

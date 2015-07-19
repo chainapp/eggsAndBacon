@@ -49,6 +49,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     var                 menuView:EABMenuView?
     var                 menuIsShow:Bool? = false
     var                 currentCateg:Int = 0
+    var                 applelink:String = String("")
     //MARK: View Lifecycle
     
     
@@ -87,6 +88,25 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.tutoImageView.hidden = true
         self.tutoImageView.image = UIImage(named: NSLocalizedString("TUTO_IMAGE", comment: ""))
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+    
+        var query:PFQuery = PFQuery(className: "Config")
+        
+        query.findObjectsInBackgroundWithBlock { (res:[AnyObject]?, error:NSError?) -> Void in
+            
+            if error == nil
+            {
+                if let finalResp = res?.first as? PFObject
+                {
+                    if let link = finalResp.objectForKey("applelink") as? String {
+                        self.applelink = link
+                    }
+                }
+            }
+            else
+            {
+                
+            }
+        }
     }
     
     func createMenu()
@@ -111,6 +131,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.menuView?.hideMenu()
         self.menuView?.segmentedIndexType.selectedSegmentIndex = 0
         self.menuView?.segmentedIndexType.addTarget(self, action: "valueSegmentedIndexChanged", forControlEvents: UIControlEvents.ValueChanged)
+        self.menuView?.segmentNotif.addTarget(self, action: "valueNotifChanged", forControlEvents: UIControlEvents.ValueChanged)
+        
         self.view.bringSubviewToFront(self.viewContainButton)
         self.titleLabel.textColor = self.menuView?.backgroundColor
         self.hideVotingElements()
@@ -150,6 +172,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             self.handle4S()
         }
     }
+    
     
     //MARK: ShakeGestureDelegate
     
@@ -394,6 +417,29 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         
     }
     
+     func valueNotifChanged() {
+        
+        let segment = self.menuView!.segmentNotif
+        
+        if segment.selectedSegmentIndex == 0
+        {
+            var application = UIApplication.sharedApplication()
+            let userNotificationTypes = (UIUserNotificationType.Alert |  UIUserNotificationType.Badge |  UIUserNotificationType.Sound);
+            
+            let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+            application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
+            
+        }
+        else
+        {
+            UIApplication.sharedApplication().unregisterForRemoteNotifications()
+        }
+        
+        
+    }
+
+    
     func valueSegmentedIndexChanged()
     {
         if self.imagesCateg[0].count > 0
@@ -438,7 +484,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                 }
             }
             // LinkMaker --> APPLE STORE
-            if let url = NSURL(string: "https://geo.itunes.apple.com/us/app/spotify-music/id324684580?mt=8")
+            if let url = NSURL(string: self.applelink)
             { // On pourra mettre l'image ?
                 let objectsToShare = [text, url]
                 let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
