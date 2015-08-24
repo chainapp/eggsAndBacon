@@ -167,7 +167,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
             self.showVotingElements()
         }
         println(UIDevice.currentDevice().modelName)
-        if UIDevice.currentDevice().modelName == "iPhone 4S" ||  UIDevice.currentDevice().modelName == "Simulator"
+        if UIDevice.currentDevice().modelName == "iPhone 4S"
         {
             self.handle4S()
         }
