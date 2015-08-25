@@ -108,6 +108,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     func createMenu()
     {
+        if (self.menuView?.isShow == true)
+        {
+            self.showMenu(nil)
+        }
         var menu:EABMenuView = EABMenuView.instanceFromNib()
         menu.buttonSendFeedBack.addTarget(self, action: "sendMailToStaff", forControlEvents: UIControlEvents.TouchUpInside)
         menu.buttonShareApp.addTarget(self, action: "share", forControlEvents: UIControlEvents.TouchUpInside)
@@ -145,7 +149,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.scrollView.contentSize = self.photoImageView.bounds.size
         self.photoImageView.contentMode = UIViewContentMode.ScaleAspectFit
         self.photoImageView.clipsToBounds = true
-        
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         //Create Menu
         self.createMenu()
@@ -496,7 +499,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.share()
     }
     
-    @IBAction func showMenu(sender: AnyObject)
+    @IBAction func showMenu(sender: AnyObject?)
     {
         var viewMask:UIView = UIView(frame:self.menuView!.frame)
         var color:UIColor?
