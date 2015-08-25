@@ -1,22 +1,27 @@
 PODS:
   - Bolts/Tasks (1.2.0)
-  - DynamicBlurView (1.0.5)
+  - Crashlytics (3.1.0)
+  - Fabric (1.2.8):
+    - Fabric/Base (= 1.2.8)
+  - Fabric/Base (1.2.8)
   - GPUImage (0.1.6)
   - MBProgressHUD (0.9.1)
-  - Parse (1.7.5):
+  - Parse (1.8.1):
     - Bolts/Tasks (>= 1.2.0)
 
 DEPENDENCIES:
-  - DynamicBlurView
+  - Crashlytics (~> 3.1.0)
+  - Fabric (~> 1.2.8)
   - GPUImage (~> 0.1)
-  - MBProgressHUD
-  - Parse
+  - MBProgressHUD (~> 0.9.1)
+  - Parse (~> 1.8.1)
 
 SPEC CHECKSUMS:
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
-  DynamicBlurView: 206601da0e1345df364ba18651d3730e6eddc99c
+  Crashlytics: 93e2f86363d53c002c6366a9d87e41f2eaee87c3
+  Fabric: a9eabe53915e9f1db55a84dd2838737928675878
   GPUImage: 4675ce4a5370ca92fcea8623b2a08b8f0c51b940
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
-  Parse: 7c0f115eff3e0cea3fac08d50bda47154edb8832
+  Parse: 2155953b1565494095d5fa5c83b3c77f2c677c09
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.38.2

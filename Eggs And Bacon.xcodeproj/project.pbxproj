@@ -11,10 +11,9 @@
 		58481F9C1B4D773600331D8B /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58481F9B1B4D773600331D8B /* UIDeviceExtension.swift */; };
 		584852C81B4556230029F4E3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 584852C71B4556230029F4E3 /* AudioToolbox.framework */; };
 		587C4FD91B3B006B0033C0A7 /* EABMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587C4FD81B3B006B0033C0A7 /* EABMenuView.swift */; };
-		58B23F9A1B430467004F0BF2 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B23F981B430467004F0BF2 /* Fabric.framework */; };
-		58B23F9B1B430467004F0BF2 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B23F991B430467004F0BF2 /* Crashlytics.framework */; };
 		58F0B1981B42D46400E87652 /* ShakeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F0B1971B42D46400E87652 /* ShakeGesture.swift */; };
 		58F0B19A1B42EA1E00E87652 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F0B1991B42EA1E00E87652 /* CoreMotion.framework */; };
+		5AD9248A74B66DF4E5730A75 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BB962C2EBDE3DF858E524D /* libPods.a */; };
 		E86454611B5C142300FB9394 /* LaunchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E86454601B5C142300FB9394 /* LaunchScreen.png */; };
 		E88143571B4D2344009BA75D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E88143591B4D2344009BA75D /* Localizable.strings */; };
 		E881435B1B4D277A009BA75D /* EABMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E881435D1B4D277A009BA75D /* EABMenuView.xib */; };
@@ -27,7 +26,6 @@
 		E8FE3D211B39B5BF005939DF /* Satisfy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3D201B39B5BF005939DF /* Satisfy-Regular.ttf */; };
 		E8FE3D231B39B7A5005939DF /* model.png in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3D221B39B7A5005939DF /* model.png */; };
 		E8FE3D251B39B7EB005939DF /* menuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3D241B39B7EB005939DF /* menuIcon.png */; };
-		FBDF7590250702E9D8E4BF70 /* Pods_Eggs_And_Bacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D26655A3D8DA0FE81F16AD0 /* Pods_Eggs_And_Bacon.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,18 +39,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D26655A3D8DA0FE81F16AD0 /* Pods_Eggs_And_Bacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eggs_And_Bacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2996A33FE2612CF547BF1C99 /* Pods-Eggs And Bacon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eggs And Bacon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon.debug.xcconfig"; sourceTree = "<group>"; };
 		58053ED51B3C356400A92A19 /* ManagedPFObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedPFObject.swift; sourceTree = "<group>"; };
 		58481F9B1B4D773600331D8B /* UIDeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		584852C71B4556230029F4E3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		587C4FD81B3B006B0033C0A7 /* EABMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EABMenuView.swift; sourceTree = "<group>"; };
-		58B23F981B430467004F0BF2 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		58B23F991B430467004F0BF2 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		58BB962C2EBDE3DF858E524D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DD687B1B39E6520012BCFF /* Eggs And Bacon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Eggs And Bacon-Bridging-Header.h"; sourceTree = "<group>"; };
 		58F0B1971B42D46400E87652 /* ShakeGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShakeGesture.swift; sourceTree = "<group>"; };
 		58F0B1991B42EA1E00E87652 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		66266576EC30B50F1B681F03 /* Pods-Eggs And Bacon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eggs And Bacon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon.release.xcconfig"; sourceTree = "<group>"; };
+		B35DC498461811E1A58450E8 /* Pods.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.distribution.xcconfig; path = "Pods/Target Support Files/Pods/Pods.distribution.xcconfig"; sourceTree = "<group>"; };
+		C303779F40AA43D6BD375A55 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E86454601B5C142300FB9394 /* LaunchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreen.png; sourceTree = "<group>"; };
 		E88143481B4D215A009BA75D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		E88143491B4D215A009BA75D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -73,6 +69,7 @@
 		E8FE3D201B39B5BF005939DF /* Satisfy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Satisfy-Regular.ttf"; path = "Eggs And Bacon/Satisfy-Regular.ttf"; sourceTree = SOURCE_ROOT; };
 		E8FE3D221B39B7A5005939DF /* model.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = model.png; sourceTree = "<group>"; };
 		E8FE3D241B39B7EB005939DF /* menuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuIcon.png; sourceTree = "<group>"; };
+		F08D04A261E8C21D2DDC11E1 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,9 +79,7 @@
 			files = (
 				584852C81B4556230029F4E3 /* AudioToolbox.framework in Frameworks */,
 				58F0B19A1B42EA1E00E87652 /* CoreMotion.framework in Frameworks */,
-				FBDF7590250702E9D8E4BF70 /* Pods_Eggs_And_Bacon.framework in Frameworks */,
-				58B23F9B1B430467004F0BF2 /* Crashlytics.framework in Frameworks */,
-				58B23F9A1B430467004F0BF2 /* Fabric.framework in Frameworks */,
+				5AD9248A74B66DF4E5730A75 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,11 +93,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2926D71EB46B4A89FCFB49F8 /* Pods */ = {
+		2756375C31670C599B1385CE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2996A33FE2612CF547BF1C99 /* Pods-Eggs And Bacon.debug.xcconfig */,
-				66266576EC30B50F1B681F03 /* Pods-Eggs And Bacon.release.xcconfig */,
+				C303779F40AA43D6BD375A55 /* Pods.debug.xcconfig */,
+				F08D04A261E8C21D2DDC11E1 /* Pods.release.xcconfig */,
+				B35DC498461811E1A58450E8 /* Pods.distribution.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -110,11 +106,9 @@
 		DB0BC18A93A650664CD2F34B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				58B23F991B430467004F0BF2 /* Crashlytics.framework */,
-				58B23F981B430467004F0BF2 /* Fabric.framework */,
 				584852C71B4556230029F4E3 /* AudioToolbox.framework */,
 				58F0B1991B42EA1E00E87652 /* CoreMotion.framework */,
-				1D26655A3D8DA0FE81F16AD0 /* Pods_Eggs_And_Bacon.framework */,
+				58BB962C2EBDE3DF858E524D /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -143,8 +137,8 @@
 				E8FE3CF81B39A015005939DF /* Eggs And Bacon */,
 				E8FE3D0E1B39A015005939DF /* Eggs And BaconTests */,
 				E8FE3CF71B39A015005939DF /* Products */,
-				2926D71EB46B4A89FCFB49F8 /* Pods */,
 				DB0BC18A93A650664CD2F34B /* Frameworks */,
+				2756375C31670C599B1385CE /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -240,7 +234,6 @@
 				E8FE3CF31B39A015005939DF /* Frameworks */,
 				E8FE3CF41B39A015005939DF /* Resources */,
 				57BA7827FE4639EC984C0617 /* Copy Pods Resources */,
-				A306C4FEAA5ACFA711B646A6 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -353,22 +346,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A306C4FEAA5ACFA711B646A6 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Eggs And Bacon/Pods-Eggs And Bacon-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A6F61EA2562EAC7F87779DD0 /* Check Pods Manifest.lock */ = {
@@ -545,7 +523,7 @@
 		};
 		E8FE3D161B39A015005939DF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2996A33FE2612CF547BF1C99 /* Pods-Eggs And Bacon.debug.xcconfig */;
+			baseConfigurationReference = C303779F40AA43D6BD375A55 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -567,7 +545,7 @@
 		};
 		E8FE3D171B39A015005939DF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66266576EC30B50F1B681F03 /* Pods-Eggs And Bacon.release.xcconfig */;
+			baseConfigurationReference = F08D04A261E8C21D2DDC11E1 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -660,7 +638,7 @@
 		};
 		F8AD66471B6A343A00C2325A /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66266576EC30B50F1B681F03 /* Pods-Eggs And Bacon.release.xcconfig */;
+			baseConfigurationReference = B35DC498461811E1A58450E8 /* Pods.distribution.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

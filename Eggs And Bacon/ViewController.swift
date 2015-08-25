@@ -7,9 +7,6 @@
 //
 
 import UIKit
-import GPUImage
-import Parse
-import MBProgressHUD
 import AudioToolbox
 
 let    MAXSHAKES: Int = 10

@@ -1,16 +1,13 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '6.0'
+source 'https://github.com/CocoaPods/Specs.git'
 
-target 'Eggs And Bacon' do
+# platform :ios, '7.0'
+
 
 pod 'GPUImage', '~> 0.1'
-use_frameworks!
-pod 'Parse'
-pod 'MBProgressHUD'
+platform :ios, '7.0'
+pod 'Crashlytics', '~> 3.1.0'
+pod 'Fabric', '~> 1.2.8'
+pod 'Parse', '~> 1.8.1'
+pod 'MBProgressHUD', '~> 0.9.1'
 
-end
-
-target 'Eggs And BaconTests' do
-
-end
-
+link_with 'Eggs And Bacon'

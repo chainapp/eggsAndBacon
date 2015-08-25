@@ -4,3 +4,4 @@
 
 #import <GPUImage/GPUImage.h>
 #import <Parse/Parse.h>
+#import "MBProgressHUD.h"
