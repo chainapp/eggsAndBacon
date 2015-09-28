@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.enableLocalDatastore()
         Parse.setApplicationId("7vXQaUViTCx03Xth3v6OTx5kk64YrDjuJwYJLI9m", clientKey: "wk1NBzEKqRyV2fJz0bWIzKY9i3TxnFEfyz6k50bU")
         Fabric.with([Crashlytics()])
-        let userNotificationTypes = (UIUserNotificationType.Alert |  UIUserNotificationType.Badge |  UIUserNotificationType.Sound);
+        let userNotificationTypes: UIUserNotificationType = ([UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]);
         
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         application.registerUserNotificationSettings(settings)
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let installation = PFInstallation.currentInstallation()
         installation.setDeviceTokenFromData(deviceToken)
         installation.saveEventually { (success:Bool, error:NSError?) -> Void in
-            println(error)
+            print(error)
         }
     }
     
@@ -100,8 +100,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                        
                         if error != nil || results == nil || results?.count == 0
                         {
-                            println("Error fetchInBackground no data")
-                            println(error)
+                            print("Error fetchInBackground no data")
+                            print(error)
                             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
                             completionHandler(UIBackgroundFetchResult.Failed)
                         }

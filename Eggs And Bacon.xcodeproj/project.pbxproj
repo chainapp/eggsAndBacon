@@ -22,21 +22,10 @@
 		E8FE3D011B39A015005939DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3CFF1B39A015005939DF /* Main.storyboard */; };
 		E8FE3D031B39A015005939DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3D021B39A015005939DF /* Images.xcassets */; };
 		E8FE3D061B39A015005939DF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3D041B39A015005939DF /* LaunchScreen.xib */; };
-		E8FE3D121B39A015005939DF /* Eggs_And_BaconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FE3D111B39A015005939DF /* Eggs_And_BaconTests.swift */; };
 		E8FE3D211B39B5BF005939DF /* Satisfy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3D201B39B5BF005939DF /* Satisfy-Regular.ttf */; };
 		E8FE3D231B39B7A5005939DF /* model.png in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3D221B39B7A5005939DF /* model.png */; };
 		E8FE3D251B39B7EB005939DF /* menuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E8FE3D241B39B7EB005939DF /* menuIcon.png */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		E8FE3D0C1B39A015005939DF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E8FE3CEE1B39A015005939DF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E8FE3CF51B39A015005939DF;
-			remoteInfo = "Eggs And Bacon";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		58053ED51B3C356400A92A19 /* ManagedPFObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedPFObject.swift; sourceTree = "<group>"; };
@@ -63,7 +52,6 @@
 		E8FE3D001B39A015005939DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E8FE3D021B39A015005939DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E8FE3D051B39A015005939DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		E8FE3D0B1B39A015005939DF /* Eggs And BaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Eggs And BaconTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8FE3D101B39A015005939DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8FE3D111B39A015005939DF /* Eggs_And_BaconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eggs_And_BaconTests.swift; sourceTree = "<group>"; };
 		E8FE3D201B39B5BF005939DF /* Satisfy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Satisfy-Regular.ttf"; path = "Eggs And Bacon/Satisfy-Regular.ttf"; sourceTree = SOURCE_ROOT; };
@@ -80,13 +68,6 @@
 				584852C81B4556230029F4E3 /* AudioToolbox.framework in Frameworks */,
 				58F0B19A1B42EA1E00E87652 /* CoreMotion.framework in Frameworks */,
 				5AD9248A74B66DF4E5730A75 /* libPods.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E8FE3D081B39A015005939DF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,7 +127,6 @@
 			isa = PBXGroup;
 			children = (
 				E8FE3CF61B39A015005939DF /* Eggs And Bacon.app */,
-				E8FE3D0B1B39A015005939DF /* Eggs And BaconTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -244,46 +224,25 @@
 			productReference = E8FE3CF61B39A015005939DF /* Eggs And Bacon.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E8FE3D0A1B39A015005939DF /* Eggs And BaconTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E8FE3D181B39A015005939DF /* Build configuration list for PBXNativeTarget "Eggs And BaconTests" */;
-			buildPhases = (
-				E8FE3D071B39A015005939DF /* Sources */,
-				E8FE3D081B39A015005939DF /* Frameworks */,
-				E8FE3D091B39A015005939DF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E8FE3D0D1B39A015005939DF /* PBXTargetDependency */,
-			);
-			name = "Eggs And BaconTests";
-			productName = "Eggs And BaconTests";
-			productReference = E8FE3D0B1B39A015005939DF /* Eggs And BaconTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		E8FE3CEE1B39A015005939DF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Nyu Web Developpement";
 				TargetAttributes = {
 					E8FE3CF51B39A015005939DF = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = PHAN4JE4T7;
+						DevelopmentTeam = 3HG2DM29ZP;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 						};
-					};
-					E8FE3D0A1B39A015005939DF = {
-						CreatedOnToolsVersion = 6.3.2;
-						TestTargetID = E8FE3CF51B39A015005939DF;
 					};
 				};
 			};
@@ -302,7 +261,6 @@
 			projectRoot = "";
 			targets = (
 				E8FE3CF51B39A015005939DF /* Eggs And Bacon */,
-				E8FE3D0A1B39A015005939DF /* Eggs And BaconTests */,
 			);
 		};
 /* End PBXProject section */
@@ -321,13 +279,6 @@
 				E86454611B5C142300FB9394 /* LaunchScreen.png in Resources */,
 				E8FE3D061B39A015005939DF /* LaunchScreen.xib in Resources */,
 				E8FE3D031B39A015005939DF /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E8FE3D091B39A015005939DF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,23 +331,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E8FE3D071B39A015005939DF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E8FE3D121B39A015005939DF /* Eggs_And_BaconTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E8FE3D0D1B39A015005939DF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E8FE3CF51B39A015005939DF /* Eggs And Bacon */;
-			targetProxy = E8FE3D0C1B39A015005939DF /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E88143591B4D2344009BA75D /* Localizable.strings */ = {
@@ -527,7 +462,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Philippe Braun (3HG2DM29ZP)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -536,10 +473,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2230e4d7-d834-4571-a051-905d9f409a70";
+				PROVISIONING_PROFILE = "4d6fb975-7d2a-406f-8a58-9052ce6e34ff";
 				SWIFT_OBJC_BRIDGING_HEADER = "Eggs And Bacon/Eggs And Bacon-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -549,7 +486,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Philippe Braun (3HG2DM29ZP)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -558,43 +497,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2230e4d7-d834-4571-a051-905d9f409a70";
+				PROVISIONING_PROFILE = "4d6fb975-7d2a-406f-8a58-9052ce6e34ff";
 				SWIFT_OBJC_BRIDGING_HEADER = "Eggs And Bacon/Eggs And Bacon-Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		E8FE3D191B39A015005939DF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Eggs And BaconTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eggs And Bacon.app/Eggs And Bacon";
-			};
-			name = Debug;
-		};
-		E8FE3D1A1B39A015005939DF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Eggs And BaconTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eggs And Bacon.app/Eggs And Bacon";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -642,7 +547,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Philippe Braun (3HG2DM29ZP)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -651,24 +558,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2230e4d7-d834-4571-a051-905d9f409a70";
+				PROVISIONING_PROFILE = "4d6fb975-7d2a-406f-8a58-9052ce6e34ff";
 				SWIFT_OBJC_BRIDGING_HEADER = "Eggs And Bacon/Eggs And Bacon-Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Distribution;
-		};
-		F8AD66481B6A343A00C2325A /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Eggs And BaconTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eggs And Bacon.app/Eggs And Bacon";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Distribution;
 		};
@@ -691,16 +583,6 @@
 				E8FE3D161B39A015005939DF /* Debug */,
 				E8FE3D171B39A015005939DF /* Release */,
 				F8AD66471B6A343A00C2325A /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E8FE3D181B39A015005939DF /* Build configuration list for PBXNativeTarget "Eggs And BaconTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E8FE3D191B39A015005939DF /* Debug */,
-				E8FE3D1A1B39A015005939DF /* Release */,
-				F8AD66481B6A343A00C2325A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

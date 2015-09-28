@@ -31,7 +31,15 @@ class ShakeGesture: NSObject {
             motionMngr.gyroUpdateInterval = updateTimeInterval
             motionMngr.accelerometerUpdateInterval = 0.1
             motionMngr.startAccelerometerUpdates()
-            motionMngr.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue()) {
+            motionMngr.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue()) { [weak self] (data: CMAccelerometerData?, error: NSError?) in
+                let yy = data!.acceleration.y
+                let v = abs(yy - (self?.currentY ?? 0)) / updateTimeInterval
+                if v > 14
+                {
+                    self?.delegate?.didFindAShake()
+                }
+            }
+            /*motionMngr.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue()) {
                 [weak self] (data: CMAccelerometerData!, error: NSError!) in
                 
                 let yy = data.acceleration.y
@@ -41,7 +49,7 @@ class ShakeGesture: NSObject {
                     self?.delegate?.didFindAShake()
                 }
                 //println("Vitesse: \(v)")
-            }
+            }*/
         }
     }
     

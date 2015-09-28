@@ -14,14 +14,14 @@ class ManagedPFObject: NSObject {
     
     class func minMaxDate() -> (dateMin:NSDate, dateMax:NSDate)
     {
-        var calendar:NSCalendar = NSCalendar.currentCalendar()
-        var dateComponents:NSDateComponents = calendar.components(NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour, fromDate: NSDate())
-        dateComponents.setValue(6, forComponent: NSCalendarUnit.CalendarUnitHour)
+        let calendar:NSCalendar = NSCalendar.currentCalendar()
+        let dateComponents:NSDateComponents = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour], fromDate: NSDate())
+        dateComponents.setValue(6, forComponent: NSCalendarUnit.Hour)
         
-        var morning:NSDate = calendar.dateFromComponents(dateComponents)!
+        let morning:NSDate = calendar.dateFromComponents(dateComponents)!
         
         dateComponents.day = dateComponents.day + 1
-        var last:NSDate = calendar.dateFromComponents(dateComponents)!
+        let last:NSDate = calendar.dateFromComponents(dateComponents)!
         
         return (morning, last)
     }
@@ -31,12 +31,12 @@ class ManagedPFObject: NSObject {
     {
         let dateBounds = ManagedPFObject.minMaxDate()
         
-        var query:PFQuery = PFQuery(className: "Pictures")
+        let query:PFQuery = PFQuery(className: "Pictures")
         query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
         query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
         
         query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
-            println(results)
+            print(results)
             
             if results != nil && results?.count > 0
             {
@@ -58,7 +58,7 @@ class ManagedPFObject: NSObject {
                             }
                             else
                             {
-                                println(error)
+                                print(error)
                             }
                             if i == (results!.count - 1)
                             {
@@ -67,12 +67,12 @@ class ManagedPFObject: NSObject {
                                     PFObject.pinAllInBackground(pfobjs, block: { (success:Bool, error:NSError?) -> Void in
                                         if success == true
                                         {
-                                            println("All obj have been pinned")
+                                            print("All obj have been pinned")
                                         }
                                         else
                                         {
-                                            println("Error when pin object")
-                                            println(error)
+                                            print("Error when pin object")
+                                            print(error)
                                         }
                                     })
                                     completionBlock(results: pfobjs, images:imgs, error: nil)
@@ -102,12 +102,13 @@ class ManagedPFObject: NSObject {
     {
         let dateBounds = ManagedPFObject.minMaxDate()
         
-        var query:PFQuery = PFQuery(className: "Pictures")
+        let query:PFQuery = PFQuery(className: "Pictures")
         query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
         query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
-        query.fromLocalDatastore()
+        //query.fromLocalDatastore()
+        
         query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
-            println(results)
+            print(results)
             
             if results != nil && results?.count > 0
             {
@@ -128,21 +129,24 @@ class ManagedPFObject: NSObject {
                             }
                             else
                             {
-                                println(error)
+                                print(error)
                             }
                             if i == (results!.count - 1)
                             {
+                                print(results!.count);
+                                print(imgs.count);
+                                print(pfobjs.count)
                                 if pfobjs.count == results!.count && imgs.count == results!.count
                                 {
                                     PFObject.pinAllInBackground(pfobjs, block: { (success:Bool, error:NSError?) -> Void in
                                         if success == true
                                         {
-                                            println("All obj have been pinned")
+                                            print("All obj have been pinned")
                                         }
                                         else
                                         {
-                                            println("Error when pin object")
-                                            println(error)
+                                            print("Error when pin object")
+                                            print(error)
                                         }
                                     })
                                     completionBlock(results: pfobjs, images:imgs, error: nil)

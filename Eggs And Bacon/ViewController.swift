@@ -10,7 +10,7 @@ import UIKit
 import AudioToolbox
 
 let    MAXSHAKES: Int = 10
-let    BLURRADIUSPIX: CGFloat = 20
+let    BLURRADIUSPIX: CGFloat = 10
 let    MENUHEIGHT: CGFloat = 180.0
 
 class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtocol {
@@ -55,7 +55,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         
         self.view.removeConstraint(self.constraintLabelHeartTop)
         self.view.removeConstraint(self.verticalHeartConstraint)
-        var constraint:NSLayoutConstraint = NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.scrollView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 8)
+        let constraint:NSLayoutConstraint = NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.scrollView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 8)
         self.view.addConstraint(constraint)
         self.constraintHeightMessageLabel.constant = 20
         self.view.layoutIfNeeded()
@@ -86,7 +86,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.tutoImageView.image = UIImage(named: NSLocalizedString("TUTO_IMAGE", comment: ""))
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     
-        var query:PFQuery = PFQuery(className: "Config")
+        let query:PFQuery = PFQuery(className: "Config")
         
         query.findObjectsInBackgroundWithBlock { (res:[AnyObject]?, error:NSError?) -> Void in
             
@@ -112,13 +112,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         {
             self.showMenu(nil)
         }
-        var menu:EABMenuView = EABMenuView.instanceFromNib()
+        let menu:EABMenuView = EABMenuView.instanceFromNib()
         menu.buttonSendFeedBack.addTarget(self, action: "sendMailToStaff", forControlEvents: UIControlEvents.TouchUpInside)
         menu.buttonShareApp.addTarget(self, action: "share", forControlEvents: UIControlEvents.TouchUpInside)
         
-        var constraintHMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: MENUHEIGHT)
+        let constraintHMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: MENUHEIGHT)
         let constraintWMenu:NSLayoutConstraint = NSLayoutConstraint(item: menu, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: self.view.bounds.size.width)
-        menu.setTranslatesAutoresizingMaskIntoConstraints(false)
+        menu.translatesAutoresizingMaskIntoConstraints = false
         menu.addConstraint(constraintHMenu)
         menu.addConstraint(constraintWMenu)
         
@@ -156,7 +156,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         self.shakeHelper = ShakeGesture()
         self.shakeHelper?.delegate = self
         self.shakeHelper?.loadCoreMotion()
-        var blurProg = self.blurProgresses[(self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0)]
+        let blurProg = self.blurProgresses[(self.menuView?.segmentedIndexType.selectedSegmentIndex ?? 0)]
         
         if blurProg < (self.imagesBlurred.count - 1)
         {
@@ -166,7 +166,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         {
             self.showVotingElements()
         }
-        println(UIDevice.currentDevice().modelName)
+        print(UIDevice.currentDevice().modelName)
         if UIDevice.currentDevice().modelName == "iPhone 4S"
         {
             self.handle4S()
@@ -181,7 +181,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         
         if blurProg < (self.imagesBlurred.count - 1)
         {
-            println(blurProg)
+            print(blurProg)
             self.photoImageView.image = nil
             self.photoImageView.image = self.imagesBlurred[blurProg]
             let i:Float = 1.0/Float(MAXSHAKES)
@@ -213,7 +213,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     {
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
         image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
-        var newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
     }
@@ -243,7 +243,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     func updateUI()
     {
-        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        let defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         if let tuto: Bool = defaults.objectForKey("tutorial") as? Bool
         {
             if tuto == false
@@ -300,7 +300,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     func loadData()
     {
         ManagedPFObject.getLocalDailyPictures { (results, images, error) -> () in
-            println(images)
+            print(images)
             
             //Init Blur and Alpha progress to their saved value
             self.blurProgresses = NSUserDefaults.standardUserDefaults().valueForKey("currentblurprogress") as? [Int] ?? [0, 0, 0]
@@ -319,7 +319,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                     self.blurProgresses = [0, 0, 0]
                     self.alphaProgress = [0.0, 0.0, 0.0]
                     //println(results)
-                    println(images)
+                    print(images)
                     if results != nil && images != nil
                     {
                         self.initDatasFromResults(results, images: images)
@@ -375,9 +375,20 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     
     func blurWithGPUImageGaussian(image: UIImage!, pixelRadius:CGFloat) -> UIImage
     {
-        var  gpuBlurGaussianFilter:GPUImageGaussianBlurFilter = GPUImageGaussianBlurFilter()
+        let  gpuBlurGaussianFilter:GPUImageGaussianBlurFilter = GPUImageGaussianBlurFilter()
         gpuBlurGaussianFilter.blurRadiusInPixels = pixelRadius
-        return gpuBlurGaussianFilter.imageByFilteringImage(image)
+        if (image == nil){
+            print("nullll");
+            
+            
+        }
+        print(pixelRadius)
+        var newImg =  gpuBlurGaussianFilter.imageByFilteringImage(image)
+        print("GLAUSSURE")
+        if (newImg == nil){
+            print("nullll");
+        }
+        return newImg
     }
     
     //MARK: Action
@@ -386,14 +397,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     {
         let dateBounds = ManagedPFObject.minMaxDate()
         
-        var query:PFQuery = PFQuery(className: "Pictures")
+        let query:PFQuery = PFQuery(className: "Pictures")
         query.whereKey("category", equalTo: self.menuView!.getCategoryName())
         query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
         query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
         query.fromLocalDatastore()
         
         query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
-            println(results)
+            print(results)
             
             if let objects = results as? [PFObject] {
                 if objects.count >= 1
@@ -423,8 +434,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         
         if segment.selectedSegmentIndex == 0
         {
-            var application = UIApplication.sharedApplication()
-            let userNotificationTypes = (UIUserNotificationType.Alert |  UIUserNotificationType.Badge |  UIUserNotificationType.Sound);
+            let application = UIApplication.sharedApplication()
+            let userNotificationTypes: UIUserNotificationType = ([UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]);
             
             let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
             application.registerUserNotificationSettings(settings)
@@ -446,7 +457,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
         {
             self.currentCateg = self.menuView?.segmentedIndexType?.selectedSegmentIndex ?? 0
             self.imagesBlurred = self.imagesCateg[currentCateg]
-            var blurProg = self.blurProgresses[self.currentCateg]
+            let blurProg = self.blurProgresses[self.currentCateg]
             if blurProg < (self.imagesBlurred.count - 1)
             {
                 self.hideVotingElements()
@@ -463,14 +474,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     {
         let dateBounds = ManagedPFObject.minMaxDate()
         
-        var query:PFQuery = PFQuery(className: "Pictures")
+        let query:PFQuery = PFQuery(className: "Pictures")
         query.whereKey("category", equalTo: self.menuView!.getCategoryName())
         query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
         query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
         query.fromLocalDatastore()
         
         query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
-            println(results)
+            print(results)
             
             var text = "Share your Eggs or your Bacon today!"
             
@@ -543,13 +554,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     @IBAction func unlikeButtonAction(sender: UIButton) {
         let dateBounds = ManagedPFObject.minMaxDate()
         
-        var query:PFQuery = PFQuery(className: "Pictures")
+        let query:PFQuery = PFQuery(className: "Pictures")
         query.whereKey("category", equalTo: self.menuView!.getCategoryName())
         query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
         query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
         
         query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
-            println(results)
+            print(results)
             
             if let objects = results as? [PFObject] {
                 if objects.count >= 1
@@ -562,7 +573,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                             self.labelUnlike.text = "\(unlike)"
                             
                             data.saveInBackgroundWithBlock({ (results: Bool, error: NSError?) -> Void in
-                                println("Error ? = \(error)")
+                                print("Error ? = \(error)")
                             })
                         }
                         
@@ -576,13 +587,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
     @IBAction func likeButtonAction(sender: AnyObject) {
         let dateBounds = ManagedPFObject.minMaxDate()
         
-        var query:PFQuery = PFQuery(className: "Pictures")
+        let query:PFQuery = PFQuery(className: "Pictures")
         query.whereKey("category", equalTo: self.menuView!.getCategoryName())
         query.whereKey("dateToReveal", greaterThanOrEqualTo: dateBounds.dateMin)
         query.whereKey("dateToReveal", lessThan: dateBounds.dateMax)
         query.fromLocalDatastore()
         query.findObjectsInBackgroundWithBlock { (results:[AnyObject]?, error:NSError?) -> Void in
-            println(results)
+            print(results)
             
             if let objects = results as? [PFObject] {
                 if objects.count >= 1
@@ -595,7 +606,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, ShakeGestureProtoc
                             self.labelLike.text = "\(like)"
                             
                             data.saveInBackgroundWithBlock({ (results: Bool, error: NSError?) -> Void in
-                                println("Error ? = \(error)")
+                                print("Error ? = \(error)")
                             })
                         }
                         
